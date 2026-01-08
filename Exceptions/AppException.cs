@@ -15,4 +15,8 @@ public class AppException : Exception
 
 //this class gives us the ability to throw a custom exception, giving our own message for context, and then base initializes the message
 //field for the technical root cause of the error i.e. json bad format or something
+//we use this in expected exceptions during the running of the program, providing a clear high-level message whilst preserving the underlying tehcnical cause of the excpetion
+
+
+//the main benefit is that in execution, program.cs can differentiate between expected errors (AppException) or unexpected exceptions
 
