@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "title": "Learn records + nullable",
+    "isDone": false,
+    "priority": 5,
+    "owner": "You",
+    "category": "CSharp",
+    "dueDate": "2026-01-09T18:00:00Z",
+    "notes": "Use DateTime? and string? safely"
+  },
+  {
+    "id": 2,
+    "title": "Practice LINQ filters",
+    "isDone": false,
+    "priority": 4,
+    "owner": "You",
+    "category": "CSharp",
+    "dueDate": null,
+    "notes": null
+  },
+  {
+    "id": 3,
+    "title": "Async file read",
+    "isDone": true,
+    "priority": 2,
+    "owner": "You",
+    "category": "DotNet",
+    "dueDate": null,
+    "notes": "Done"
+  },
+  {
+    "id": 4,
+    "title": "Group tasks by owner",
+    "isDone": false,
+    "priority": 3,
+    "owner": "Alex",
+    "category": "Reporting",
+    "dueDate": "2026-01-08T12:00:00Z",
+    "notes": null
+  },
+  {
+    "id": 5,
+    "title": "Handle bad data with AppException",
+    "isDone": false,
+    "priority": 5,
+    "owner": "Alex",
+    "category": "ErrorHandling",
+    "dueDate": null,
+    "notes": "Wrap JsonException as InnerException"
+  }
+]
