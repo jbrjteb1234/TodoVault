@@ -24,7 +24,7 @@ public sealed class JsonFileRepository : IRepository<TodoItem>
 
     //GetAllAsync implementation from IRepository
     //ASync methods must return Task<>. This represents a future state, so any caller can await it and wait for the result
-    public async Task<IReadOnlyList<TodoItem>> GetAllAsync(CancellationToken ct = default)
+    public async Task<IReadOnlyList<TodoItem>> GetAllASync(CancellationToken ct = default)
     {
         try
         {
