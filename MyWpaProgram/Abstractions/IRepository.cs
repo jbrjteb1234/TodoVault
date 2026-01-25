@@ -2,7 +2,9 @@ namespace MyWpaProgram.Abstractions;
 
 public interface IRepository<T>
 {
-    Task<IReadOnlyList<T>> GetAllASync(CancellationToken ct = default);
+    Task<IReadOnlyList<T>> GetAllAsync(CancellationToken ct = default);
+
+    Task SaveAllAsync(IReadOnlyList<T> items, CancellationToken ct = default);
 }
 
 /*
