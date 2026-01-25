@@ -10,10 +10,12 @@ public sealed class JsonFileRepository : IRepository<TodoItem>
 {
     private readonly string _jsonPath;
 
-    //Set the property JsonOptions. Make it static (belongs to the type/class, not the instance) 
+    //Set the property JsonOptions. Make it static (belongs to the type/class, not the instance), set casing and indentations.
     private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions()
     {
-        PropertyNameCaseInsensitive = true
+        PropertyNameCaseInsensitive = true,
+        WriteIndented = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
     //constructor
@@ -24,7 +26,7 @@ public sealed class JsonFileRepository : IRepository<TodoItem>
 
     //GetAllAsync implementation from IRepository
     //ASync methods must return Task<>. This represents a future state, so any caller can await it and wait for the result
-    public async Task<IReadOnlyList<TodoItem>> GetAllASync(CancellationToken ct = default)
+    public async Task<IReadOnlyList<TodoItem>> GetAllAsync(CancellationToken ct = default)
     {
         try
         {
