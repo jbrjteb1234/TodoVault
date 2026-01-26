@@ -2,5 +2,5 @@ namespace MyWpaProgram.Exceptions;
 
 public sealed class ValidationException : AppException
 {
-    ValidationException(string message) : base(message) {}
+    public ValidationException(string message) : base(message) {}
 }
