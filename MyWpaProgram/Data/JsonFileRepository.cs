@@ -61,4 +61,31 @@ public sealed class JsonFileRepository : IRepository<TodoItem>
             throw new AppException("Failed to read JSON file sample-todos.json", ex);
         }
     }
+
+    public async Task SaveAllAsync(IReadOnlyList<TodoItem> items, CancellationToken ct = default)
+    {
+        try
+        {   
+            //temporary path to store data
+            var tempPath = _jsonPath + ".tmp";
+
+            //open file on temp path, serialize data into the filestream stream, which is on tempPath
+            await using (FileStream stream = File.Create(tempPath))
+            {
+                await JsonSerializer.SerializeAsync(stream, items, JsonOptions, ct);
+                await stream.FlushAsync(ct);
+            }
+
+            //overwrite existing file with the tempPath
+            File.Move(tempPath, _jsonPath, overwrite: true);
+        }
+        catch (IOException ex)
+        {
+            throw new AppException("Failed to write JSON file", ex);
+        }
+        catch (NotSupportedException ex)
+        {
+            throw new AppException("Could not serialize data to JSON.", ex);
+        }
+    }
 }
