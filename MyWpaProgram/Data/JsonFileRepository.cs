@@ -22,6 +22,17 @@ public sealed class JsonFileRepository : IRepository<TodoItem>
     public JsonFileRepository(string jsonPath)
     {
         _jsonPath = jsonPath;
+
+        var dir = Path.GetDirectoryName(_jsonPath);
+
+        //if it is not whitespace (a valid string) and does not exist, then create the directory
+        if (!string.IsNullOrWhiteSpace(dir) && !Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
+        //if the actual file at the end of the path does not exist, write some placeholder json data for now
+        if (!File.Exists(_jsonPath))
+            File.WriteAllText(_jsonPath, "[]");
+
     }
 
     //GetAllAsync implementation from IRepository
@@ -30,9 +41,6 @@ public sealed class JsonFileRepository : IRepository<TodoItem>
     {
         try
         {
-            //throw custom exception if file not found
-            if (!File.Exists(_jsonPath))
-                throw new AppException("File sample-todos.json not found");
 
             //using means it will automatically dispose when we leave the scope
             await using FileStream stream = File.OpenRead(_jsonPath);
