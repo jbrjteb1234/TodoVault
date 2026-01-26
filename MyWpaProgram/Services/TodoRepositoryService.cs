@@ -1,5 +1,6 @@
 using MyWpaProgram.Abstractions;
 using MyWpaProgram.Models;
+using MyWpaProgram.Exceptions;
 
 namespace MyWpaProgram.Services;
 
@@ -7,6 +8,9 @@ public sealed class TodoRepositoryService
 {
     private readonly IRepository<TodoItem> _repo;
     private readonly TodoService _todoService;
+
+    //Protects read-modify-write for concurrency
+    private static readonly SemaphoreSlim writeGate = new(1,1);
 
     //takes 
     public TodoRepositoryService(IRepository<TodoItem> repo, TodoService todoService)
@@ -19,6 +23,8 @@ public sealed class TodoRepositoryService
     public Task<IReadOnlyList<TodoItem>> GetAllAsync(CancellationToken ct = default)
         => _repo.GetAllAsync(ct);
 
+    
+    // --------------------------- READS ---------------------------
     //Use get all async for the deserialized TodoItems, then use the LINQ operation from todoservice to return a sorted result.
     public async Task<IReadOnlyList<TodoItem>> GetOpenSortedAsync(CancellationToken ct = default)
     {
@@ -42,6 +48,43 @@ public sealed class TodoRepositoryService
     {
         var items = await _repo.GetAllAsync(ct);
         return _todoService.GetOverdue(items, nowUtc);
+    }
+
+    // --------------------------- WRITES --------------------------- 
+
+    public async Task<TodoItem> CreateAsync(TodoCreateDto dto, CancellationToken ct)
+    {
+        
+    }
+
+    public async Task<TodoItem?> UpdateAsync(int id, TodoUpdateDto dto, CancellationToken ct)
+    {
+        
+    }
+
+    public async Task<bool> DeleteAsync(int id, CancellationToken ct)
+    {
+        
+    }
+
+    // ---------------- VALIDATION HELPERS ----------------
+
+    private static void ValidateTitle(string title)
+    {
+        if (string.IsNullOrWhiteSpace(title))
+            throw new ValidationException("Title must not be empty.");
+    }
+
+    private static void ValidateRequired(string value, string fieldName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            throw new ValidationException($"{fieldName} must not be empty.");
+    }
+
+    private static void ValidatePriority(int priority)
+    {
+        if (priority < 1 || priority > 5)
+            throw new ValidationException("Priority must be between 1 and 5.");
     }
 
 }
