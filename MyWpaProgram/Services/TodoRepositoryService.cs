@@ -177,7 +177,7 @@ public sealed class TodoRepositoryService
 
     private static void ValidateId(int id)
     {
-        if (id < 0)
+        if (id <= 0)
         {
             throw new ValidationException("ID must be greater than 0");
         }
