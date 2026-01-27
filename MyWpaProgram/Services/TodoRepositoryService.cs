@@ -52,16 +52,51 @@ public sealed class TodoRepositoryService
 
     // --------------------------- WRITES --------------------------- 
 
+    //validate → lock → read list → generate id → add → save → return new item
     public async Task<TodoItem> CreateAsync(TodoCreateDto dto, CancellationToken ct)
     {
-        
+        //Validate the DTO
+        ValidateTitle(dto.Title);
+        ValidatePriority(dto.Priority);
+        ValidateRequired(dto.Owner, "Owner");
+        ValidateRequired(dto.Category, "Category");
+
+        await writeGate.WaitAsync(ct);
+        try{
+            //copy the IReadOnlyList from GetAllAsync into a mutable list to operate on
+            var list = (await _repo.GetAllAsync(ct)).ToList();
+
+            //generate id: if empty then 1 or the max id + 1
+            var nextId = list.Count == 0 ? 1 : list.Max(t => t.Id) + 1;
+
+            TodoItem created = new TodoItem(
+                Id: nextId,
+                Title: dto.Title.Trim(),
+                IsDone: false,
+                Priority: dto.Priority,
+                Owner: dto.Owner.Trim(),
+                Category: dto.Category.Trim(),
+                DueDate: dto.DueDate,
+                Notes: string.IsNullOrWhiteSpace(dto.Notes) ? null : dto.Notes //treat a dto.Notes of whitespace as null
+            );
+
+            list.Add(created);
+            await _repo.SaveAllAsync( list, ct );
+            return created;
+        }
+        finally //finally runs when the try block exits
+        {
+            writeGate.Release();
+        }
     }
 
+    //validate → lock → read list → find by id → replace record → save → return updated (or null)
     public async Task<TodoItem?> UpdateAsync(int id, TodoUpdateDto dto, CancellationToken ct)
     {
         
     }
 
+    //lock → read list → remove → save → return bool
     public async Task<bool> DeleteAsync(int id, CancellationToken ct)
     {
         
