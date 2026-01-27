@@ -132,9 +132,27 @@ public sealed class TodoRepositoryService
     }
 
     //lock → read list → remove → save → return bool
-    public async Task<bool> DeleteAsync(int id, CancellationToken ct)
+    public async Task DeleteAsync(int id, CancellationToken ct)
     {
         
+        ValidateId(id);
+
+        await writeGate.WaitAsync(ct);
+        
+        try
+        {
+            var list = (await _repo.GetAllAsync(ct)).ToList();
+
+            var index = ValidateAndLocateTodo(id, list);
+
+            list.RemoveAt(index);
+
+            await _repo.SaveAllAsync(list, ct);
+        }
+        finally
+        {
+            writeGate.Release();
+        }
     }
 
     // ---------------- VALIDATION HELPERS ----------------
