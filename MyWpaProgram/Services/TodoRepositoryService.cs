@@ -122,4 +122,12 @@ public sealed class TodoRepositoryService
             throw new ValidationException("Priority must be between 1 and 5.");
     }
 
+    private static void ValidateId(int id)
+    {
+        if (id < 0)
+        {
+            throw new ValidationException("ID must be greater than 0");
+        }
+    }
+
 }
