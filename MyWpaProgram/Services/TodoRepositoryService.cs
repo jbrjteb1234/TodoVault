@@ -93,7 +93,42 @@ public sealed class TodoRepositoryService
     //validate → lock → read list → find by id → replace record → save → return updated (or null)
     public async Task<TodoItem?> UpdateAsync(int id, TodoUpdateDto dto, CancellationToken ct)
     {
-        
+        ValidateTitle(dto.Title);
+        ValidatePriority(dto.Priority);
+        ValidateRequired(dto.Owner, "Owner");
+        ValidateRequired(dto.Category, "Category");
+        ValidateId(id);
+
+        await writeGate.WaitAsync(ct);
+
+        try
+        {
+            var list = (await _repo.GetAllAsync(ct)).ToList();
+
+            var index = ValidateAndLocateTodo(id, list);
+
+            var existing = list[index];
+
+            var replacement = existing with
+            {
+                Title = dto.Title.Trim(),
+                IsDone = dto.IsDone,
+                Priority = dto.Priority,
+                Owner = dto.Owner.Trim(),
+                Category = dto.Category.Trim(),
+                DueDate = dto.DueDate,
+                Notes = string.IsNullOrWhiteSpace(dto.Notes) ? null : dto.Notes
+            };
+
+            list[index] = replacement;
+            await _repo.SaveAllAsync(list, ct);
+            return replacement;
+            
+        }
+        finally
+        {
+            writeGate.Release();
+        }
     }
 
     //lock → read list → remove → save → return bool
@@ -128,6 +163,14 @@ public sealed class TodoRepositoryService
         {
             throw new ValidationException("ID must be greater than 0");
         }
+    }
+
+    private static int ValidateAndLocateTodo(int id, List<TodoItem> list)
+    {
+        var index = list.FindIndex(t => t.Id == id);
+        if(index < 0)
+            throw new NotFoundException("ID does not exist");
+        return index;
     }
 
 }
