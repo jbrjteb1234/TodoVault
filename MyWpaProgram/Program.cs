@@ -64,6 +64,21 @@ static IResult MapAppException(AppException ex)
     };
 }
 
+//Executes the given async action and returns its IResult
+//If it throws AppException, Map it and return the IResult for the error
+//IResult is instructions to create http response, for instance, Results.Problem returns an object which is an implementation of IResult.
+static async Task<IResult> Handle(Func<Task<IResult>> action)
+{
+    try
+    {
+        return await action();
+    }
+    catch(AppException ex)
+    {
+        return MapAppException(ex);
+    }
+}
+
 //Use the frontend CORS policy we established earlier
 app.UseCors("frontend");
 
