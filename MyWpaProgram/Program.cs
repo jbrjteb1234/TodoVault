@@ -2,6 +2,7 @@
 using MyWpaProgram.Data;
 using MyWpaProgram.Models;
 using MyWpaProgram.Services;
+using MyWpaProgram.Exceptions;
 
 //entry point for asp.net applications - allows for http endpoint hosting
 var builder = WebApplication.CreateBuilder(args);
