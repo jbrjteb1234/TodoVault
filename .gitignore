@@ -480,3 +480,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Custom dev files
+
+_AMALGAMATED_PROJECT.txt
+amalgamate.py
