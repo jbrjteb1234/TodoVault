@@ -36,6 +36,34 @@ builder.Services.AddScoped<TodoRepositoryService>();
 
 var app = builder.Build();
 
+//Exception mapping - knowing what to return based on the type of exception
+static IResult MapAppException(AppException ex)
+{
+    //This is a switch statement, not an expression - look for a pattern, in this case, we compare types of ex 
+    return ex switch
+    {   
+        //For each hand, call the method Result.Problem
+        ValidationException ve => Results.Problem(
+            title: "Validation failed",
+            detail: ve.Message,
+            statusCode: StatusCodes.Status400BadRequest
+        ),
+
+        NotFoundException nfe => Results.Problem(
+            title: "Missing resource",
+            detail: nfe.Message,
+            statusCode: StatusCodes.Status404NotFound
+        ),
+
+        //This is the handler for a plain AppException
+        _ => Results.Problem(
+            title: "Internal server error",
+            detail: ex.Message,
+            statusCode: StatusCodes.Status500InternalServerError
+        ),
+    };
+}
+
 //Use the frontend CORS policy we established earlier
 app.UseCors("frontend");
 
