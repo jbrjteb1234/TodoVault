@@ -77,7 +77,7 @@ public sealed class TodoRepositoryService
                 Owner: dto.Owner.Trim(),
                 Category: dto.Category.Trim(),
                 DueDate: dto.DueDate,
-                Notes: string.IsNullOrWhiteSpace(dto.Notes) ? null : dto.Notes //treat a dto.Notes of whitespace as null
+                Notes: string.IsNullOrWhiteSpace(dto.Notes) ? null : dto.Notes.Trim() //treat a dto.Notes of whitespace as null
             );
 
             list.Add(created);
@@ -117,7 +117,7 @@ public sealed class TodoRepositoryService
                 Owner = dto.Owner.Trim(),
                 Category = dto.Category.Trim(),
                 DueDate = dto.DueDate,
-                Notes = string.IsNullOrWhiteSpace(dto.Notes) ? null : dto.Notes
+                Notes = string.IsNullOrWhiteSpace(dto.Notes) ? null : dto.Notes.Trim()
             };
 
             list[index] = replacement;
