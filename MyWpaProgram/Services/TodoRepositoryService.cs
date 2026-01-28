@@ -90,7 +90,7 @@ public sealed class TodoRepositoryService
         }
     }
 
-    //validate → lock → read list → find by id → replace record → save → return updated (or null)
+    //validate → lock → read list → find by id → replace record → save → return updated
     public async Task<TodoItem?> UpdateAsync(int id, TodoUpdateDto dto, CancellationToken ct)
     {
         ValidateTitle(dto.Title);
