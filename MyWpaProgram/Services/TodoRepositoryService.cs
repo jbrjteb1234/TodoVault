@@ -50,6 +50,14 @@ public sealed class TodoRepositoryService
         return _todoService.GetOverdue(items, nowUtc);
     }
 
+    public async Task<TodoItem> GetByIdAsync(int id, CancellationToken ct = default)
+    {
+        ValidateId(id);
+        var list = (await _repo.GetAllAsync(ct)).ToList();
+        var index = ValidateAndLocateTodo(id: id, list: list);
+        return list[index];
+    }
+
     // --------------------------- WRITES --------------------------- 
 
     //validate → lock → read list → generate id → add → save → return new item
