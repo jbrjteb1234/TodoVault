@@ -116,6 +116,27 @@ app.MapGet("/api/todos/{id:int}", (int id, TodoRepositoryService svc, Cancellati
 
 //Create
 
-app.MapPut("/api/todos/put");
+app.MapPost("/api/todos", (TodoCreateDto dto, TodoRepositoryService svc, CancellationToken ct)
+    => Handle(async () =>
+        {
+            var created = await svc.CreateAsync(dto, ct);
+            return  Results.Created($"/api/todos/{created.Id}", created);
+        }));
+
+app.MapPut("/api/todos/{id:int}", (int id, TodoUpdateDto dto, TodoRepositoryService svc, CancellationToken ct)
+    => Handle(async () =>
+        {
+            var updated = await svc.UpdateAsync(id, dto, ct);
+            return Results.Ok(updated);
+        }));
+
+app.MapDelete("/api/todos/{id:int}", (int id, TodoRepositoryService svc, CancellationToken ct)
+    => Handle(async () => 
+        {
+            await svc.DeleteAsync(id, ct);
+            return Results.NoContent();
+        }));
+
+        
 
 app.Run();
