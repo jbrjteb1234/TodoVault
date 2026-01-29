@@ -39,7 +39,7 @@ var app = builder.Build();
 //Exception mapping - knowing what to return based on the type of exception
 static IResult MapAppException(AppException ex)
 {
-    //This is a switch statement, not an expression - look for a pattern, in this case, we compare types of ex 
+    //This is a switch expression - look for a pattern, in this case, we compare types of ex 
     return ex switch
     {   
         //For each hand, call the method Result.Problem
@@ -60,7 +60,7 @@ static IResult MapAppException(AppException ex)
             title: "Internal server error",
             detail: ex.Message,
             statusCode: StatusCodes.Status500InternalServerError
-        ),
+        )
     };
 }
 
@@ -83,19 +83,39 @@ static async Task<IResult> Handle(Func<Task<IResult>> action)
 app.UseCors("frontend");
 
 //These are the endpoints for the app - the API
-app.MapGet("/api/todos", async (TodoRepositoryService svc, CancellationToken ct)
-    => Results.Ok(await svc.GetAllAsync(ct)));
 
-app.MapGet("/api/todos/open", async (TodoRepositoryService svc, CancellationToken ct)
-    => Results.Ok(await svc.GetOpenSortedAsync(ct)));
+/*
+There are two lambdas nested here.
+The outer lambda is the function that the endpoint will call upon a request.
+svc (TodoRepositoryService) is supplied by our previous dependency injection (in this case, its a scoped, so unique for each request)
+async () => (...) means an asynchronous lambda with 0 arguments
+We need the lambda passed to handle to be async so we can await it in handle and wait for the inner function to finish or produce any exceptions
+So since we are awaiting the inntermost function (could be svc.GetAllASync), we create our lambda as async so that Handle can also await the result
+(since handle is responsibly for catching AppException and then calling MapException)
+*/
 
-app.MapGet("/api/todos/top", async (int? top, TodoRepositoryService svc, CancellationToken ct)
-    => Results.Ok(await svc.GetTopPriorityAsync(top ?? 5, ct)));
+app.MapGet("/api/todos", (TodoRepositoryService svc, CancellationToken ct)
+    => Handle(async () => Results.Ok(await svc.GetAllAsync(ct))));
 
-app.MapGet("/api/todos/overdue", async (TodoRepositoryService svc, CancellationToken ct)
-    => Results.Ok(await svc.GetOverdueAsync(DateTime.UtcNow, ct)));
+app.MapGet("/api/todos/open", (TodoRepositoryService svc, CancellationToken ct)
+    => Handle(async () => Results.Ok(await svc.GetOpenSortedAsync(ct))));
 
-app.MapGet("/api/todos/count-by-owner", async (TodoRepositoryService svc, CancellationToken ct)
-    => Results.Ok(await svc.CountByOwnerAsync(ct)));
+app.MapGet("/api/todos/top", (int? top, TodoRepositoryService svc, CancellationToken ct)
+    => Handle(async () => Results.Ok(await svc.GetTopPriorityAsync(top ?? 5, ct))));
+
+app.MapGet("/api/todos/overdue", (TodoRepositoryService svc, CancellationToken ct)
+    => Handle(async () => Results.Ok(await svc.GetOverdueAsync(DateTime.UtcNow, ct))));
+
+app.MapGet("/api/todos/count-by-owner", (TodoRepositoryService svc, CancellationToken ct)
+    => Handle(async () => Results.Ok(await svc.CountByOwnerAsync(ct))));
+
+//Get by ID
+
+app.MapGet("/api/todos/{id:int}", (int id, TodoRepositoryService svc, CancellationToken ct) 
+    => Handle(async () => Results.Ok(await svc.GetByIdAsync(id, ct))));
+
+//Create
+
+app.MapPut("/api/todos/put");
 
 app.Run();
