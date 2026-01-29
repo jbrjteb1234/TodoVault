@@ -53,7 +53,7 @@ public sealed class TodoRepositoryService
     public async Task<TodoItem> GetByIdAsync(int id, CancellationToken ct = default)
     {
         ValidateId(id);
-        var list = (await _repo.GetAllAsync(ct)).ToList();
+        var list = (await _repo.GetAllAsync(ct));
         var index = ValidateAndLocateTodo(id: id, list: list);
         return list[index];
     }
@@ -191,12 +191,14 @@ public sealed class TodoRepositoryService
         }
     }
 
-    private static int ValidateAndLocateTodo(int id, List<TodoItem> list)
+    private static int ValidateAndLocateTodo(int id, IReadOnlyList<TodoItem> list)
     {
-        var index = list.FindIndex(t => t.Id == id);
-        if(index < 0)
-            throw new NotFoundException("ID does not exist");
-        return index;
+        for (int i = 0; i<list.Count; i++)
+        {
+            if(id==list[i].Id) return i;
+        }
+        
+        throw new NotFoundException("ID does not exist");
     }
 
 }
