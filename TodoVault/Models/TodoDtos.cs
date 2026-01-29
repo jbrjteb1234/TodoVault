@@ -1,4 +1,4 @@
-namespace MyWpaProgram.Models;
+namespace TodoVault.Models;
 
 //Client provides everything except Id and IsDone (IsDone defaults false on create)
 public sealed record TodoCreateDto(

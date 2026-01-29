@@ -1,8 +1,8 @@
-using MyWpaProgram.Abstractions;
-using MyWpaProgram.Models;
-using MyWpaProgram.Exceptions;
+using TodoVault.Abstractions;
+using TodoVault.Models;
+using TodoVault.Exceptions;
 
-namespace MyWpaProgram.Services;
+namespace TodoVault.Services;
 
 public sealed class TodoRepositoryService
 {

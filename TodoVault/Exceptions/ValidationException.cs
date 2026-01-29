@@ -1,4 +1,4 @@
-namespace MyWpaProgram.Exceptions;
+namespace TodoVault.Exceptions;
 
 public sealed class ValidationException : AppException
 {

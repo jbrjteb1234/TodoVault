@@ -1,4 +1,4 @@
-namespace MyWpaProgram.Abstractions;
+namespace TodoVault.Abstractions;
 
 public interface IRepository<T>
 {

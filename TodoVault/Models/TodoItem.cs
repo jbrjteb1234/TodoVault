@@ -1,5 +1,5 @@
 //define namespace
-namespace MyWpaProgram.Models;
+namespace TodoVault.Models;
 
 //implement public sealed record - sealed means you cant inherit from it and create sub-classes,
 //record is a data-friendly structure, allowing for two different instance proprties to be equivalent if they have the same value

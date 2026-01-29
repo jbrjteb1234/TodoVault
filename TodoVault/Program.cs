@@ -1,8 +1,8 @@
-﻿using MyWpaProgram.Abstractions;
-using MyWpaProgram.Data;
-using MyWpaProgram.Models;
-using MyWpaProgram.Services;
-using MyWpaProgram.Exceptions;
+﻿using TodoVault.Abstractions;
+using TodoVault.Data;
+using TodoVault.Models;
+using TodoVault.Services;
+using TodoVault.Exceptions;
 
 //entry point for asp.net applications - allows for http endpoint hosting
 var builder = WebApplication.CreateBuilder(args);

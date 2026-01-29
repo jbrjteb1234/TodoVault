@@ -1,6 +1,6 @@
-using MyWpaProgram.Models;
+using TodoVault.Models;
 
-namespace MyWpaProgram.Services;
+namespace TodoVault.Services;
 
 public sealed class TodoService
 {

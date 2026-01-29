@@ -1,9 +1,9 @@
 using System.Text.Json;
-using MyWpaProgram.Abstractions;
-using MyWpaProgram.Models;
-using MyWpaProgram.Exceptions;
+using TodoVault.Abstractions;
+using TodoVault.Models;
+using TodoVault.Exceptions;
 
-namespace MyWpaProgram.Data;
+namespace TodoVault.Data;
 
 //public class, sealed (cannot derive from), and this is derived from the interface IRepository, with the given type TodoItem (the record we defined)
 public sealed class JsonFileRepository : IRepository<TodoItem>

@@ -1,4 +1,4 @@
-namespace MyWpaProgram.Exceptions;
+namespace TodoVault.Exceptions;
 
 
 //derive a public class "AppException" from the "Exception" type
