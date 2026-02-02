@@ -1,6 +1,6 @@
 //import a TYPE from the file
 import type { Todo } from "./types/todo.ts";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { getTodos } from "./api/TodoApis.ts";
 
 const layoutSize = {
@@ -9,37 +9,60 @@ const layoutSize = {
 }
 
 //Default app to export
-export default function App(){
+export default function App() {
     //State: array of toods loaded onto the frontend
-    const [todos, setTodos] = useState<Todo[]>( new Array<Todo>() ); //UseState for arrays loaded on the frontend, init to empty array of Todos
+    const [todos, setTodos] = useState<Todo[]>(new Array<Todo>()); //UseState for arrays loaded on the frontend, init to empty array of Todos
 
     //States: loading a Todo and an error state
-    const [loading, setLoading] = useState<boolean>( false );
+    const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);    //type is a union of string and null
 
     //Fetch the TODOs when the component first loads
     useEffect(() => {
-        async function loadTodos(){
-            try{
+        async function loadTodos() {
+            try {
                 setLoading(true);
                 setError(null);
 
-                const data:Todo[] = await getTodos();
+                const data: Todo[] = await getTodos();
                 setTodos(data);
-            }catch{
+            } catch {
                 setError("Failed to fetch Todos.")
-            }finally{
+            } finally {
                 setLoading(false);
             }
         }
 
         void loadTodos();
     }, []); //dependancy array - [] means run once when the component first renders
-    
+
     return (
         <main style={layoutSize}>
             <h1>TodoVault</h1>
+
+            {loading && <p>Loading todos...</p>}
+
+            {!loading && error && (
+                <p style={{ color: "crimson" }}>
+                    Failed to load todos: {error}
+                </p>
+            )}
+
+            {!loading && !error && (
+                <ul style={{ paddingLeft: 18 }}>
+                    {todos.map((todo) => (
+                        <li key={todo.id} style={{ marginBottom: 8 }}>
+                            <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                                <input type="checkbox" checked={todo.isDone} readOnly />
+                                <span style={{ textDecoration: todo.isDone ? "line-through" : "none" }}>
+                                    {todo.title}
+                                </span>
+                            </label>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </main>
-    )
+    );
 
 }
