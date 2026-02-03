@@ -15,7 +15,7 @@ export default function App() {
 
     //States: loading a Todo and an error state
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);    //type is a union of string and null
+    const [error, setError] = useState<string | null>(null);    //type is union of string and null
 
     //Fetch the TODOs when the component first loads
     useEffect(() => {
