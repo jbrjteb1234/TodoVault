@@ -40,7 +40,7 @@ export default function App() {
         void loadTodos();
     }, []); //dependancy array - [] means run once when the component first renders
 
-    async function handleCreate(){
+    async function handleCreate(): Promise<void>{
         
         const trimmedTitle = newTitle.trim();
         if(trimmedTitle.length == 0) return;
@@ -72,6 +72,13 @@ export default function App() {
                     Failed to load todos: {error}
                 </p>
             )}
+
+            <form onSubmit={handleCreate}>
+                <input onChange={(element) => setNewTitle(element.target.value)}></input>
+                <button type="submit" disabled={creating}>
+                    {creating? "Creating..." : "Create"}
+                </button> 
+            </form>
 
             {!loading && !error && (
                 <ul style={{ paddingLeft: 18 }}>
