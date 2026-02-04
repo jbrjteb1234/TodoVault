@@ -1,7 +1,7 @@
 //import a TYPE from the file
 import type { Todo } from "./types/todo.ts";
 import { useEffect, useState } from "react";
-import { getTodos } from "./api/TodoApis.ts";
+import { createTodo, getTodos } from "./api/TodoApis.ts";
 
 const layoutSize = {
     padding: 24,
@@ -16,6 +16,10 @@ export default function App() {
     //States: loading a Todo and an error state
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);    //type is union of string and null
+
+    //States: create todo
+    const [newTitle, setNewTitle] = useState<String>("");
+    const [creating, setCreating] = useState<boolean>(false);
 
     //Fetch the TODOs when the component first loads
     useEffect(() => {
@@ -35,6 +39,27 @@ export default function App() {
 
         void loadTodos();
     }, []); //dependancy array - [] means run once when the component first renders
+
+    async function handleCreate(){
+        
+        const trimmedTitle = newTitle.trim();
+        if(trimmedTitle.length == 0) return;
+
+        try{
+            setCreating(true);
+            setError(null);
+
+            const createdTodo:Todo = await createTodo(trimmedTitle);
+
+            setTodos(todos.concat(createdTodo));
+            setNewTitle("");
+
+        }catch{
+            setError("Failed to create todo");
+        }finally{
+            setCreating(false);
+        }
+    }
 
     return (
         <main style={layoutSize}>
