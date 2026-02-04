@@ -22,3 +22,23 @@ export async function getTodos(): Promise<Todo[]> {     //Promise<Todo[]> = Task
     return data;
 
 }
+
+export async function createTodo(title: string): Promise<Todo> {
+    
+    const response = await fetch(todoURL, {
+        method: "POST",
+        headers: {"content-type": "application/json"},
+        body: JSON.stringify(title)
+    });
+
+    if(!response.ok){
+        const text:string = await response.text();
+        const errorCode:number = response.status;
+        throw new Error(`Failed to create todo at URL ${todoURL}. Status: ${errorCode}. Message: ${text}`);
+    }
+
+    const data:Todo = (await response.json()) as Todo;
+
+    return data;
+
+}
