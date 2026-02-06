@@ -15,23 +15,28 @@ export default function App() {
 
     //States: loading a Todo and an error state
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);    //type is union of string and null
 
     //States: create todo
     const [newTitle, setNewTitle] = useState<string>("");
     const [creating, setCreating] = useState<boolean>(false);
+
+    //States: CRUD errors
+    const [getError, setGetError] = useState<string | null>(null);    //type is union of string and null
+    const [createError, setCreateError] = useState<string | null>(null);
+    const [updateError, setUpdateError] = useState<string | null>(null);
+    const [deleteError, setDeleteError] = useState<string | null>(null);
 
     //Fetch the TODOs when the component first loads
     useEffect(() => {
         async function loadTodos() {
             try {
                 setLoading(true);
-                setError(null);
+                setGetError(null);
 
                 const data: Todo[] = await getTodos();
                 setTodos(data);
             } catch(error) {
-                setError(String(error));
+                setGetError(String(error));
             } finally {
                 setLoading(false);
             }
@@ -48,7 +53,7 @@ export default function App() {
 
         try{
             setCreating(true);
-            setError(null);
+            setCreateError(null);
 
             const createdTodo:Todo = await createTodo(trimmedTitle);
 
@@ -56,7 +61,7 @@ export default function App() {
             setNewTitle("");
 
         } catch(error) {
-                setError(String(error));
+                setCreateError(String(error));
         }finally{
             setCreating(false);
         }
@@ -67,7 +72,7 @@ export default function App() {
             <h1>TodoVault</h1>
 
             <form onSubmit={handleCreate}>
-                {error != null && <div style={{color: "crimson"}}>Error when creating todo</div>}
+                {createError != null && <div style={{color: "crimson"}}>{createError}</div>}
                 <input onChange={(element) => setNewTitle(element.target.value)}></input>
                 <button type="submit" disabled={creating}>
                     {creating? "Creating..." : "Create"}
@@ -76,13 +81,13 @@ export default function App() {
 
             {loading && <p>Loading todos...</p>}
 
-            {!loading && error != null && (
+            {!loading && getError != null && (
                 <p style={{ color: "crimson" }}>
-                    Failed to load todos: {error}
+                    Failed to load todos: {getError}
                 </p>
             )}
 
-            {!loading && !error && (
+            {!loading && !getError && (
                 <ul style={{ paddingLeft: 18 }}>
                     {todos.map((todo) => (
                         <li key={todo.id} style={{ marginBottom: 8 }}>
