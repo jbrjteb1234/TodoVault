@@ -18,7 +18,7 @@ export default function App() {
     const [error, setError] = useState<string | null>(null);    //type is union of string and null
 
     //States: create todo
-    const [newTitle, setNewTitle] = useState<String>("");
+    const [newTitle, setNewTitle] = useState<string>("");
     const [creating, setCreating] = useState<boolean>(false);
 
     //Fetch the TODOs when the component first loads
@@ -30,8 +30,8 @@ export default function App() {
 
                 const data: Todo[] = await getTodos();
                 setTodos(data);
-            } catch {
-                setError("Failed to fetch Todos.")
+            } catch(error) {
+                setError(String(error));
             } finally {
                 setLoading(false);
             }
@@ -40,7 +40,8 @@ export default function App() {
         void loadTodos();
     }, []); //dependancy array - [] means run once when the component first renders
 
-    async function handleCreate(): Promise<void>{
+    async function handleCreate(event: React.FormEvent<HTMLFormElement>): Promise<void>{
+        event.preventDefault();
         
         const trimmedTitle = newTitle.trim();
         if(trimmedTitle.length == 0) return;
@@ -54,8 +55,8 @@ export default function App() {
             setTodos(todos.concat(createdTodo));
             setNewTitle("");
 
-        }catch{
-            setError("Failed to create todo");
+        } catch(error) {
+                setError(String(error));
         }finally{
             setCreating(false);
         }
@@ -65,20 +66,21 @@ export default function App() {
         <main style={layoutSize}>
             <h1>TodoVault</h1>
 
-            {loading && <p>Loading todos...</p>}
-
-            {!loading && error && (
-                <p style={{ color: "crimson" }}>
-                    Failed to load todos: {error}
-                </p>
-            )}
-
             <form onSubmit={handleCreate}>
+                {error != null && <div style={{color: "crimson"}}>Error when creating todo</div>}
                 <input onChange={(element) => setNewTitle(element.target.value)}></input>
                 <button type="submit" disabled={creating}>
                     {creating? "Creating..." : "Create"}
                 </button> 
             </form>
+
+            {loading && <p>Loading todos...</p>}
+
+            {!loading && error != null && (
+                <p style={{ color: "crimson" }}>
+                    Failed to load todos: {error}
+                </p>
+            )}
 
             {!loading && !error && (
                 <ul style={{ paddingLeft: 18 }}>
