@@ -1,5 +1,5 @@
 //import a TYPE from the file
-import type { Todo } from "./types/todo.ts";
+import type { Todo,CreateTodoDto } from "./types/todo.ts";
 import { useEffect, useState } from "react";
 import { createTodo, getTodos } from "./api/TodoApis.ts";
 
@@ -17,7 +17,14 @@ export default function App() {
     const [loading, setLoading] = useState<boolean>(false);
 
     //States: create todo
-    const [newTitle, setNewTitle] = useState<string>("");
+    const [createForm, setCreateForm] = useState<CreateTodoDto>({
+        title: "",
+        priority: "",
+        owner: "",
+        category: "",
+        dueDate: null,
+        notes: null,
+    });
     const [creating, setCreating] = useState<boolean>(false);
 
     //States: CRUD errors
