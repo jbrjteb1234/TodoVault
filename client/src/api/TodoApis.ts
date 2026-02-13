@@ -25,8 +25,6 @@ export async function getTodos(): Promise<Todo[]> {     //Promise<Todo[]> = Task
 
 export async function createTodo(dto: CreateTodoDto): Promise<Todo> {
     
-    console.log(JSON.stringify(dto));
-
     const response = await fetch(todoURL, {
         method: "POST",
         headers: {"content-type": "application/json"},
