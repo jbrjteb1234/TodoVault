@@ -2,6 +2,10 @@ import type { Priority, Todo, CreateTodoDto, UpdateTodoDto } from "../types/todo
 
 const todoURL = "/api/todos"    //our vite proxy which will forward to backend
 
+function getTodoUrl(id: number): string{
+    return `${todoURL}/${id}`
+}
+
 export async function getTodos(): Promise<Todo[]> {     //Promise<Todo[]> = Task<Todo[]> in C#
     
     const response = await fetch(todoURL, {   //fetch = browsers built-in http request function
@@ -37,8 +41,26 @@ export async function createTodo(dto: CreateTodoDto): Promise<Todo> {
         throw new Error(`Failed to create todo at URL ${todoURL}. Status: ${errorCode}. Message: ${text}`);
     }
 
-    const data:Todo = (await response.json()) as Todo;
+    return (await response.json()) as Todo;
 
-    return data;
+}
+
+export async function updateTodo(dto: UpdateTodoDto, id: number): Promise<Todo> {
+
+    let url = getTodoUrl(id);
+
+    let response = await fetch(url, {
+        method: "PUT",
+        headers: {"content-type": "application/json"},
+        body: JSON.stringify(dto)
+    });
+
+    if(!response.ok){
+        const text = await response.text();
+        const errorCode = response.status;
+        throw new Error(`Failed to update Todo ${id}. Error code: ${errorCode}`);
+    }
+
+    return (await response.json()) as Todo;
 
 }
