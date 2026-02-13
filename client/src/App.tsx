@@ -1,6 +1,7 @@
 //import a TYPE from the file
-import type { Todo,CreateTodoDto } from "./types/todo.ts";
+import { type Todo,type CreateTodoDto, type Priority, PriorityOptions } from "./types/todo.ts";
 import { useEffect, useState } from "react";
+import type React from "react";
 import { createTodo, getTodos } from "./api/TodoApis.ts";
 
 const layoutSize = {
@@ -19,7 +20,7 @@ export default function App() {
     //States: create todo
     const [createForm, setCreateForm] = useState<CreateTodoDto>({
         title: "",
-        priority: "",
+        priority: null,
         owner: "",
         category: "",
         dueDate: null,
@@ -55,17 +56,13 @@ export default function App() {
     async function handleCreate(event: React.FormEvent<HTMLFormElement>): Promise<void>{
         event.preventDefault();
         
-        const trimmedTitle = newTitle.trim();
-        if(trimmedTitle.length == 0) return;
-
         try{
             setCreating(true);
             setCreateError(null);
 
-            const createdTodo:Todo = await createTodo(trimmedTitle);
+            const createdTodo:Todo = await createTodo(createForm);
 
             setTodos(todos.concat(createdTodo));
-            setNewTitle("");
 
         } catch(error) {
                 setCreateError(String(error));
@@ -74,13 +71,51 @@ export default function App() {
         }
     }
 
+    function parseFormField<T extends keyof CreateTodoDto>(key: T, value: string): CreateTodoDto[T] {
+        value = value.trim();
+        switch(key){
+            case "priority": {
+                return (value === "" ? null : Number(value) as Priority) as CreateTodoDto[T];
+            }
+            case "notes":
+            case "dueDate": {
+                return (value === "" ? null : value) as CreateTodoDto[T];
+            }
+            default:
+                return value as CreateTodoDto[T];
+        }
+    }
+
+    function formUpdater<T extends keyof CreateTodoDto>(element: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, key: T){
+        setCreateForm( (prev) => ({
+            ...prev,
+            [key]: parseFormField(key, element.target.value)
+        }));
+    }
+
     return (
         <main style={layoutSize}>
             <h1>TodoVault</h1>
 
             <form onSubmit={handleCreate}>
                 {createError != null && <div style={{color: "crimson"}}>{createError}</div>}
-                <input onChange={(element) => setNewTitle(element.target.value)}></input>
+                
+                <label>Title</label><br></br>
+                <input onChange={ (e) => formUpdater(e, "title") }></input><br></br>
+                <label>Priority</label><br></br>
+                <select onChange={ (e) => formUpdater(e, "priority") } >
+                    <option value="">Select priority</option>
+                    {PriorityOptions.map( (p) => <option key={p} value={p} >{p}</option> )}
+                </select><br></br>
+                <label>Owner</label><br></br>
+                <input onChange={ (e) => formUpdater(e, "owner") }></input><br></br>
+                <label>Category</label><br></br>
+                <input onChange={ (e) => formUpdater(e, "category") }></input><br></br>
+                <label>Due date</label><br></br>
+                <input type="date" onChange={ (e) => formUpdater(e, "dueDate") }></input><br></br>
+                <label>Notes</label><br></br>
+                <textarea onChange={ (e) => formUpdater(e, "notes") }></textarea><br></br>
+                
                 <button type="submit" disabled={creating}>
                     {creating? "Creating..." : "Create"}
                 </button> 
