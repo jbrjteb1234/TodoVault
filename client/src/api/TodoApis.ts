@@ -1,4 +1,4 @@
-import type { Todo } from "../types/todo.ts";
+import type { Priority, Todo, CreateTodoDto, UpdateTodoDto } from "../types/todo.ts";
 
 const todoURL = "/api/todos"    //our vite proxy which will forward to backend
 
@@ -23,12 +23,12 @@ export async function getTodos(): Promise<Todo[]> {     //Promise<Todo[]> = Task
 
 }
 
-export async function createTodo(title: string): Promise<Todo> {
+export async function createTodo(dto: CreateTodoDto): Promise<Todo> {
     
     const response = await fetch(todoURL, {
         method: "POST",
         headers: {"content-type": "application/json"},
-        body: JSON.stringify(title)
+        body: JSON.stringify(dto)
     });
 
     if(!response.ok){
