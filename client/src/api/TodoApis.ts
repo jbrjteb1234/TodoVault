@@ -58,7 +58,7 @@ export async function updateTodo(dto: UpdateTodoDto, id: number): Promise<Todo> 
     if(!response.ok){
         const text = await response.text();
         const errorCode = response.status;
-        throw new Error(`Failed to update Todo ${id}. Error code: ${errorCode}`);
+        throw new Error(`Failed to update Todo ${id}. Error code: ${errorCode}. Message: ${text}`);
     }
 
     return (await response.json()) as Todo;
