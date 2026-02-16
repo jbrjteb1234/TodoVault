@@ -133,7 +133,7 @@ export default function App() {
             {!loading && !getError && (
                 <ul style={{ paddingLeft: 18 }}>
                     {todos.map((todo) => (
-                        CreateTodoDisplay(todo)
+                        <CreateTodoDisplay todo={todo}/>
                     ))}
                 </ul>
             )}
