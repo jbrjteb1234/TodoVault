@@ -3,6 +3,7 @@ import { type Todo,type CreateTodoDto, type Priority, PriorityOptions } from "./
 import { useEffect, useState } from "react";
 import type React from "react";
 import { createTodo, getTodos } from "./api/TodoApis.ts";
+import CreateTodoDisplay from "./components/TodoItem.tsx";
 
 const layoutSize = {
     padding: 24,
@@ -132,14 +133,7 @@ export default function App() {
             {!loading && !getError && (
                 <ul style={{ paddingLeft: 18 }}>
                     {todos.map((todo) => (
-                        <li key={todo.id} style={{ marginBottom: 8 }}>
-                            <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                                <input type="checkbox" checked={todo.isDone} readOnly />
-                                <span style={{ textDecoration: todo.isDone ? "line-through" : "none" }}>
-                                    {todo.title}
-                                </span>
-                            </label>
-                        </li>
+                        CreateTodoDisplay(todo)
                     ))}
                 </ul>
             )}
