@@ -8,16 +8,17 @@ type CreateTodoDisplayProps = {
 //This function is a react component, so the argument must be a prop object
 export default function createTodoDisplay({todo}: CreateTodoDisplayProps){
 
-    const [expanded, setExpanded] = useState<boolean>(true);
+    const [expanded, setExpanded] = useState<boolean>(false);
+
+    function expandButtonHandler(): void{
+        setExpanded(!expanded);
+    }
 
     return (
-        <li key={todo.id} style={{ marginBottom: 8 }}>
-            <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                <input type="checkbox" checked={todo.isDone} readOnly />
-                <span style={{ textDecoration: todo.isDone ? "line-through" : "none" }}>
-                    {todo.title}
-                </span>
-            </label>
+        <li key={todo.id}>
+            <label>{todo.title}</label>
+
+            <button onClick={expandButtonHandler}/>
             
             {expanded && (
                 <ul>
