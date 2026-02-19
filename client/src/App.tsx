@@ -63,7 +63,7 @@ export default function App() {
 
             const createdTodo:Todo = await createTodo(createForm);
 
-            setTodos(todos.concat(createdTodo));
+            setTodos((prev) => prev.concat(createdTodo));
 
         } catch(error) {
                 setCreateError(String(error));
