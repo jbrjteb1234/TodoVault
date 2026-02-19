@@ -3,10 +3,12 @@ import { useState } from "react";
 
 type CreateTodoDisplayProps = {
   todo: Todo;
+  setUpdater: (newTarget: Todo | null) => void
+  updaterTargetId: number | null
 };
 
 //This function is a react component, so the argument must be a prop object
-export default function createTodoDisplay({todo}: CreateTodoDisplayProps){
+export default function createTodoDisplay( { todo, setUpdater, updaterTargetId } : CreateTodoDisplayProps){
 
     const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -19,6 +21,8 @@ export default function createTodoDisplay({todo}: CreateTodoDisplayProps){
             <label>{todo.title}</label>
 
             <button onClick={expandButtonHandler}/>
+
+            <button onClick={ updaterTargetId == todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
             
             {expanded && (
                 <ul>

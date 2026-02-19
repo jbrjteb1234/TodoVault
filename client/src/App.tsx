@@ -5,6 +5,7 @@ import type React from "react";
 import { createTodo, getTodos } from "./api/TodoApis.ts";
 import CreateTodoDisplay from "./components/TodoItem.tsx";
 import CreateForm from "./components/TodoCreator.tsx";
+import TodoUpdater from "./components/TodoUpdater.tsx";
 
 const layoutSize = {
     padding: 24,
@@ -20,6 +21,12 @@ export default function App() {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [creating, setCreating] = useState<boolean>(false);
+
+    const [updaterTarget, setUpdaterTarget] = useState<Todo | null>(null);
+
+    function setUpdater(newTarget: Todo | null){
+        setUpdaterTarget(newTarget);
+    }
 
     //States: CRUD errors
     const [getError, setGetError] = useState<string | null>(null);    //type is union of string and null
@@ -67,6 +74,10 @@ export default function App() {
         <main style={layoutSize}>
             <h1>TodoVault</h1>
 
+            <TodoUpdater
+                todo={updaterTarget}
+            />
+
             <CreateForm
                 creating={creating}
                 createError={createError}
@@ -84,7 +95,7 @@ export default function App() {
             {!loading && !getError && (
                 <ul style={{ paddingLeft: 18 }}>
                     {todos.map((todo) => (
-                        <CreateTodoDisplay todo={todo}/>
+                        <CreateTodoDisplay todo={todo} setUpdater={setUpdater} updaterTargetId={updaterTarget? updaterTarget.id : null}/>
                     ))}
                 </ul>
             )}
