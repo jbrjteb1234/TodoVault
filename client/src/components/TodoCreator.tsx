@@ -44,7 +44,7 @@ export default function CreateForm(props: CreateFormProp){
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        props.onCreate(createForm); // ✅ send DTO to parent handler
+        props.onCreate(createForm);
     }
 
     return (
