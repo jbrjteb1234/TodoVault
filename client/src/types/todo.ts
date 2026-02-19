@@ -3,7 +3,7 @@
 export const PriorityOptions = [1,2,3,4,5] as const;
 export type Priority = (typeof PriorityOptions)[number] | null;
 
-type TodoCore = {
+export type TodoCore = {
     title: string;
     priority: Priority;
     owner: string;
