@@ -64,3 +64,21 @@ export async function updateTodo(dto: UpdateTodoDto, id: number): Promise<Todo> 
     return (await response.json()) as Todo;
 
 }
+
+export async function deleteTodo(id: number): Promise<void> {
+
+    let url = getTodoUrl(id);
+
+    let response = await fetch(url, {
+        method: "DELETE",
+        headers: {"content-type": "application/json"},
+        body: JSON.stringify(id)
+    });
+
+    if(!response.ok){
+        const text = await response.text()
+        const errorCode = response.status;
+        throw new Error(`Failed to delete Todo ${id}. Error code: ${errorCode}. Message: ${text}`);
+    }
+
+}
