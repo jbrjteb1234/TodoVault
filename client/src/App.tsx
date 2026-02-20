@@ -1,8 +1,8 @@
 //import a TYPE from the file
-import { type Todo,type CreateTodoDto, type Priority, PriorityOptions } from "./types/todo.ts";
+import { type Todo,type CreateTodoDto, type Priority, type UpdateTodoDto, PriorityOptions } from "./types/todo.ts";
 import { useEffect, useState } from "react";
 import type React from "react";
-import { createTodo, getTodos } from "./api/TodoApis.ts";
+import { createTodo, getTodos, updateTodo } from "./api/TodoApis.ts";
 import CreateTodoDisplay from "./components/TodoItem.tsx";
 import CreateForm from "./components/TodoCreator.tsx";
 import TodoUpdater from "./components/TodoUpdater.tsx";
@@ -21,6 +21,7 @@ export default function App() {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [creating, setCreating] = useState<boolean>(false);
+    const [updating, setUpdating] = useState<boolean>(false);
 
     const [updaterTarget, setUpdaterTarget] = useState<Todo | null>(null);
 
@@ -64,9 +65,27 @@ export default function App() {
             setTodos((prev) => prev.concat(createdTodo));
 
         } catch(error) {
-                setCreateError(String(error));
+            setCreateError(String(error));
         }finally{
             setCreating(false);
+        }
+    }
+
+    async function handleUpdate(dto: UpdateTodoDto, id: number): Promise<void> {
+        try{
+
+            setUpdating(true);
+            setUpdateError(null);
+
+            const updatedTodo:Todo = await updateTodo(dto, id)
+
+            //Set todos - map prev (returns a new array after performing callback fn on). if new id == id, then replace
+            setTodos(prev => (prev.map(e => (e.id == updatedTodo.id ? updatedTodo : e))));
+
+        }catch(error) {
+            setUpdateError(String(error));
+        }finally{
+            setUpdating(false);
         }
     }
 
@@ -76,6 +95,9 @@ export default function App() {
 
             <TodoUpdater
                 todo={updaterTarget}
+                onUpdate={handleUpdate}
+                updateError={updateError}
+                updating={updating}
             />
 
             <CreateForm
