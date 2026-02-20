@@ -81,6 +81,7 @@ export default function App() {
 
             //Set todos - map prev (returns a new array after performing callback fn on). if new id == id, then replace
             setTodos(prev => (prev.map(e => (e.id == updatedTodo.id ? updatedTodo : e))));
+            setUpdaterTarget(null);
 
         }catch(error) {
             setUpdateError(String(error));

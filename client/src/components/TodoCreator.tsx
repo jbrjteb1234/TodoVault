@@ -1,6 +1,6 @@
 import type { CreateTodoDto, Priority } from "../types/todo";
 import { PriorityOptions } from "../types/todo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type React from "react";
 
 type CreateFormProp = {
@@ -8,18 +8,25 @@ type CreateFormProp = {
     creating: boolean,
     createError: string | null,
     onCreate: (dto: CreateTodoDto) => void
+    resetKey?: number;
 };
+
+let empty:CreateTodoDto = {
+    title: "",
+    priority: null,
+    owner: "",
+    category: "",
+    dueDate: null,
+    notes: null,
+}
 
 export default function CreateForm(props: CreateFormProp){
 
-    const [createForm, setCreateForm] = useState<CreateTodoDto>(props.value || {
-        title: "",
-        priority: null,
-        owner: "",
-        category: "",
-        dueDate: null,
-        notes: null,
-    });
+    const [createForm, setCreateForm] = useState<CreateTodoDto>(props.value || empty);
+
+    useEffect(()=>{
+        setCreateForm(props.value ?? empty)
+    }, [props.resetKey]);
 
     function parseFormField<T extends keyof CreateTodoDto>(key: T, value: string): CreateTodoDto[T] {
         value = value.trim();

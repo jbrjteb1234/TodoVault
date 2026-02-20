@@ -31,6 +31,7 @@ export default function TodoUpdater( { todo,onUpdate,updateError,updating }: Upd
             creating={updating}
             createError={updateError}
             onCreate={onCreateWrapper}
+            resetKey={id}
         />
 
     );
