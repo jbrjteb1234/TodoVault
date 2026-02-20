@@ -1,7 +1,6 @@
 //import a TYPE from the file
-import { type Todo,type CreateTodoDto, type Priority, type UpdateTodoDto, PriorityOptions } from "./types/todo.ts";
+import { type Todo,type CreateTodoDto, type UpdateTodoDto } from "./types/todo.ts";
 import { useEffect, useState } from "react";
-import type React from "react";
 import { createTodo, getTodos, updateTodo, deleteTodo } from "./api/TodoApis.ts";
 import CreateTodoDisplay from "./components/TodoItem.tsx";
 import CreateForm from "./components/TodoCreator.tsx";
