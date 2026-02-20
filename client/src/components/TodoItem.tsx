@@ -5,10 +5,12 @@ type CreateTodoDisplayProps = {
   todo: Todo;
   setUpdater: (newTarget: Todo | null) => void
   updaterTargetId: number | null
+  deleteHandler: (id: number) => Promise<void>
+  deleting: boolean
 };
 
 //This function is a react component, so the argument must be a prop object
-export default function createTodoDisplay( { todo, setUpdater, updaterTargetId } : CreateTodoDisplayProps){
+export default function createTodoDisplay( { todo, setUpdater, updaterTargetId, deleteHandler, deleting } : CreateTodoDisplayProps){
 
     const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -31,6 +33,7 @@ export default function createTodoDisplay( { todo, setUpdater, updaterTargetId }
                     {todo.dueDate && (<li>Due date: {todo.dueDate}</li>)}
                     {todo.notes && (<li>Notes: {todo.notes}</li>)}
                     <button onClick={ updaterTargetId == todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
+                    <button onClick={ () => deleteHandler(todo.id) }>{deleting ? "Deleting..." : "Delete"}</button>
                 </ul>
             )}
         </li>

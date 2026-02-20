@@ -136,7 +136,7 @@ export default function App() {
             {!loading && !getError && (
                 <ul style={{ paddingLeft: 18 }}>
                     {todos.map((todo) => (
-                        <CreateTodoDisplay todo={todo} setUpdater={setUpdater} updaterTargetId={updaterTarget? updaterTarget.id : null}/>
+                        <CreateTodoDisplay todo={todo} deleteHandler={handleDelete} deleting={deleting} setUpdater={setUpdater} updaterTargetId={updaterTarget? updaterTarget.id : null}/>
                     ))}
                 </ul>
             )}
