@@ -33,6 +33,7 @@ export default function createTodoDisplay( { todo, setUpdater, updaterTargetId, 
                     <li>Category: {todo.category}</li>
                     {todo.dueDate && (<li>Due date: {todo.dueDate}</li>)}
                     {todo.notes && (<li>Notes: {todo.notes}</li>)}
+                    <li>Completed:<input type="checkbox" checked={todo.isDone} readOnly></input></li>
                     <button onClick={ updaterTargetId == todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
                     <button onClick={ () => deleteHandler(todo.id) }>{deleting ? "Deleting..." : "Delete"}</button>
                 </ul>
