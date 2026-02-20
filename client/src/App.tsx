@@ -2,7 +2,7 @@
 import { type Todo,type CreateTodoDto, type Priority, type UpdateTodoDto, PriorityOptions } from "./types/todo.ts";
 import { useEffect, useState } from "react";
 import type React from "react";
-import { createTodo, getTodos, updateTodo } from "./api/TodoApis.ts";
+import { createTodo, getTodos, updateTodo, deleteTodo } from "./api/TodoApis.ts";
 import CreateTodoDisplay from "./components/TodoItem.tsx";
 import CreateForm from "./components/TodoCreator.tsx";
 import TodoUpdater from "./components/TodoUpdater.tsx";
@@ -22,6 +22,7 @@ export default function App() {
 
     const [creating, setCreating] = useState<boolean>(false);
     const [updating, setUpdating] = useState<boolean>(false);
+    const [deleting, setDeleting] = useState<boolean>(false);
 
     const [updaterTarget, setUpdaterTarget] = useState<Todo | null>(null);
 
@@ -87,6 +88,23 @@ export default function App() {
             setUpdateError(String(error));
         }finally{
             setUpdating(false);
+        }
+    }
+
+    async function handleDelete(id: number): Promise<void> {
+        try{
+
+            setDeleting(true);
+            setDeleteError(null);
+
+            await deleteTodo(id);
+
+            setTodos((prev) => (prev.filter((e) => (e.id == id))));
+
+        }catch(error){
+            setDeleteError(String(error));
+        }finally{
+            setDeleting(false);
         }
     }
 
