@@ -32,7 +32,15 @@ export default function TodoUpdater( { todo,onUpdate,updateError,updating }: Upd
             createError={updateError}
             onCreate={onCreateWrapper}
             resetKey={id}
+        >
+        <label>Done</label><br />
+        <input
+            type="checkbox"
+            checked={formIsDone}
+            onChange={(e) => setFormIsDone(e.target.checked)}
         />
+        <br />
+        </TodoCreateForm>
 
     );
 }

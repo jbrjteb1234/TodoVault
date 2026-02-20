@@ -3,12 +3,24 @@ import { PriorityOptions } from "../types/todo";
 import { useState, useEffect } from "react";
 import type React from "react";
 
+/*
+
+value: The todo to pre-fill the form with
+creating: used by the parent to represent if the system is currently creating a todo
+createError: used by the parent to represent an error which is thrown here
+onCreate: passes the dto to the parent for it to handle creation
+resetKey: if this changes, then a different default "value (createTodoDto)"
+children: any extra fields/react stuff which needs injection
+
+*/
+
 type CreateFormProp = {
     value?: CreateTodoDto
     creating: boolean,
     createError: string | null,
-    onCreate: (dto: CreateTodoDto) => void
-    resetKey?: number;
+    onCreate: (dto: CreateTodoDto) => void,
+    resetKey?: number,
+    children?: React.ReactNode
 };
 
 let empty:CreateTodoDto = {
@@ -74,10 +86,10 @@ export default function CreateForm(props: CreateFormProp){
             <input type="date" onChange={ (e) => formUpdater(e, "dueDate") } value={createForm.dueDate ?? ""}></input><br></br>
             <label>Notes</label><br></br>
             <textarea onChange={ (e) => formUpdater(e, "notes") } value={createForm.notes ?? ""}></textarea><br></br>
-            
+            {props.children}
             <button type="submit" disabled={props.creating}>
                 {props.creating? "Creating..." : "Create"}
-            </button> 
+            </button>
         </form>
     );
 
