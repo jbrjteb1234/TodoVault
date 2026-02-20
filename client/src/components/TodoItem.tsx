@@ -22,7 +22,6 @@ export default function createTodoDisplay( { todo, setUpdater, updaterTargetId }
 
             <button onClick={expandButtonHandler}/>
 
-            <button onClick={ updaterTargetId == todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
             
             {expanded && (
                 <ul>
@@ -31,6 +30,7 @@ export default function createTodoDisplay( { todo, setUpdater, updaterTargetId }
                     <li>Category: {todo.category}</li>
                     {todo.dueDate && (<li>Due date: {todo.dueDate}</li>)}
                     {todo.notes && (<li>Notes: {todo.notes}</li>)}
+                    <button onClick={ updaterTargetId == todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
                 </ul>
             )}
         </li>
