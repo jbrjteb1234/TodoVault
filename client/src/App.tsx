@@ -99,7 +99,7 @@ export default function App() {
 
             await deleteTodo(id);
 
-            setTodos((prev) => (prev.filter((e) => (e.id == id))));
+            setTodos((prev) => (prev.filter((e) => (e.id !== id))));
 
         }catch(error){
             setDeleteError(String(error));
