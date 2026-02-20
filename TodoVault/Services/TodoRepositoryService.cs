@@ -44,7 +44,7 @@ public sealed class TodoRepositoryService
         return _todoService.CountByOwner(items);
     }
 
-    public async Task<IReadOnlyList<TodoItem>> GetOverdueAsync(DateTime nowUtc, CancellationToken ct = default)
+    public async Task<IReadOnlyList<TodoItem>> GetOverdueAsync(DateOnly nowUtc, CancellationToken ct = default)
     {
         var items = await _repo.GetAllAsync(ct);
         return _todoService.GetOverdue(items, nowUtc);

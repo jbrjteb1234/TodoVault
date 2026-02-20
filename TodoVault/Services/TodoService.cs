@@ -17,14 +17,14 @@ public sealed class TodoService
         => items
             .Where(t => !t.IsDone)
             .OrderByDescending(t => t.Priority)
-            .ThenBy(t => t.DueDate ?? DateTime.MaxValue)
+            .ThenBy(t => t.DueDate ?? DateOnly.MaxValue)
             .ToList();
 
     // 2: Take top N by priority
     public IReadOnlyList<TodoItem> GetTopPriority(IEnumerable<TodoItem> items, int top = 5)
         => items
             .OrderByDescending(t => t.Priority)
-            .ThenBy(t => t.DueDate ?? DateTime.MaxValue)
+            .ThenBy(t => t.DueDate ?? DateOnly.MaxValue)
             .Take(top)
             .ToList();
     
@@ -35,7 +35,7 @@ public sealed class TodoService
             .ToDictionary(g => g.Key, g => g.Count());
 
     // 4: Optional: overdue tasks (due date exists and is in the past, and not done)
-    public IReadOnlyList<TodoItem> GetOverdue(IEnumerable<TodoItem> items, DateTime nowUtc)
+    public IReadOnlyList<TodoItem> GetOverdue(IEnumerable<TodoItem> items, DateOnly nowUtc)
         => items
             .Where(t => !t.IsDone && t.DueDate is not null && t.DueDate.Value < nowUtc)
             .OrderBy(t => t.DueDate)

@@ -11,6 +11,6 @@ public sealed record TodoItem(
     string Owner,
     string Category,
     //the "?" means these values can be nullable
-    DateTime? DueDate,
+    DateOnly? DueDate,
     string? Notes
 );

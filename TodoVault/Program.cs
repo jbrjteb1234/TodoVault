@@ -104,7 +104,7 @@ app.MapGet("/api/todos/top", (int? top, TodoRepositoryService svc, CancellationT
     => Handle(async () => Results.Ok(await svc.GetTopPriorityAsync(top ?? 5, ct))));
 
 app.MapGet("/api/todos/overdue", (TodoRepositoryService svc, CancellationToken ct)
-    => Handle(async () => Results.Ok(await svc.GetOverdueAsync(DateTime.UtcNow, ct))));
+    => Handle(async () => Results.Ok(await svc.GetOverdueAsync(DateOnly.FromDateTime(DateTime.UtcNow), ct))));
 
 app.MapGet("/api/todos/count-by-owner", (TodoRepositoryService svc, CancellationToken ct)
     => Handle(async () => Results.Ok(await svc.CountByOwnerAsync(ct))));
