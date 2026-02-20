@@ -13,7 +13,7 @@ export default function TodoUpdater( { todo,onUpdate,updateError,updating }: Upd
 
     const [formIsDone, setFormIsDone] = useState<boolean>(false);
     
-    if(!todo) return;
+    if(!todo) return null;
 
     const { id, ...updateDto } = todo;
     const { isDone, ...createDto } = updateDto;
