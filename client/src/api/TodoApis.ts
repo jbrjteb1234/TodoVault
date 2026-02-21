@@ -1,4 +1,4 @@
-import type { Priority, Todo, CreateTodoDto, UpdateTodoDto } from "../types/todo.ts";
+import type { Todo, CreateTodoDto, UpdateTodoDto } from "../types/todo.ts";
 
 const todoURL = "/api/todos"    //our vite proxy which will forward to backend
 
