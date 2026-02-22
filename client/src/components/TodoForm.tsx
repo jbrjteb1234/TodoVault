@@ -21,7 +21,7 @@ type CreateFormProp = {
     onCreate: (dto: CreateTodoDto) => void,
     resetKey?: number,
     children?: React.ReactNode
-    hideButton?: () => void
+    hideButton: () => void
 };
 
 let empty:CreateTodoDto = {
@@ -65,6 +65,8 @@ export default function CreateForm(props: CreateFormProp){
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        setCreateForm(empty);
+        props.hideButton();
         props.onCreate(createForm);
     }
 
