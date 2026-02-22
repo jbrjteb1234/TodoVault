@@ -15,10 +15,14 @@ type CreateTodoDisplayProps = {
 //This function is a react component, so the argument must be a prop object
 export default function createTodoDisplay( { loading, getError, todoList, setUpdater, updaterTargetId, deleteHandler, deleting, deleteError } : CreateTodoDisplayProps){
 
-    const [expanded, setExpanded] = useState<boolean>(false);
+    const [expandedSet, setExpandedSet] = useState<Set<number>>(new Set<number>);
 
-    function expandButtonHandler(): void{
-        setExpanded(!expanded);
+    function expandButtonHandler(id: number): void{
+        setExpandedSet((prev) => {
+            const newSet = new Set(prev);
+            newSet.has(id) ? newSet.delete(id) : newSet.add(id);
+            return newSet;
+        });
     }
 
     return !loading && !getError &&(
@@ -27,9 +31,9 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
             <li key={todo.id}>
                 <label>{todo.title}</label>
 
-                <button onClick={expandButtonHandler}/>
+                <button onClick={() => {expandButtonHandler(todo.id)}}/>
                 
-                    {expanded && (
+                    {expandedSet.has(todo.id) && (
                         <ul>
                             {deleteError && (<label style={{color: "crimson"}}>Error deleting todo: {deleteError}</label>)}
                             <li>Priority: {todo.priority}</li>
