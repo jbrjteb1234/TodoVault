@@ -132,19 +132,17 @@ export default function App() {
                 </p>
             )}
 
-            {!loading && !getError && (
-                <ul>
-                    {todos.map((todo) => (
-                        <CreateTodoDisplay 
-                            todo={todo} 
-                            deleteHandler={handleDelete} 
-                            deleting={deleting} 
-                            deleteError={deleteError} 
-                            setUpdater={setUpdater} 
-                            updaterTargetId={updaterTarget? updaterTarget.id : null}/>
-                    ))}
-                </ul>
-            )}
+            <CreateTodoDisplay 
+                loading={loading}
+                getError={getError}
+                todoList={todos} 
+                deleteHandler={handleDelete} 
+                deleting={deleting} 
+                deleteError={deleteError} 
+                setUpdater={setUpdater} 
+                updaterTargetId={updaterTarget? updaterTarget.id : null}
+            />
+            
         </main>
     );
 
