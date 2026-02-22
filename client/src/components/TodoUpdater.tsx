@@ -1,5 +1,5 @@
 import type { UpdateTodoDto, Todo, CreateTodoDto } from "../types/todo";
-import TodoCreateForm from "./TodoCreator";
+import TodoCreateForm from "./TodoForm";
 import { useState } from "react"
 
 type UpdateTodoProp = {

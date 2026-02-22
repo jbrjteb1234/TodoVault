@@ -2,8 +2,8 @@
 import { type Todo,type CreateTodoDto, type UpdateTodoDto } from "./types/todo.ts";
 import { useEffect, useState } from "react";
 import { createTodo, getTodos, updateTodo, deleteTodo } from "./api/TodoApis.ts";
-import CreateTodoDisplay from "./components/TodoItem.tsx";
-import CreateForm from "./components/TodoCreator.tsx";
+import CreateTodoDisplay from "./components/TodoDisplay.tsx";
+import CreateForm from "./components/TodoForm.tsx";
 import TodoUpdater from "./components/TodoUpdater.tsx";
 
 const layoutSize = {
@@ -133,9 +133,15 @@ export default function App() {
             )}
 
             {!loading && !getError && (
-                <ul style={{ paddingLeft: 18 }}>
+                <ul>
                     {todos.map((todo) => (
-                        <CreateTodoDisplay todo={todo} deleteHandler={handleDelete} deleting={deleting} deleteError={deleteError} setUpdater={setUpdater} updaterTargetId={updaterTarget? updaterTarget.id : null}/>
+                        <CreateTodoDisplay 
+                            todo={todo} 
+                            deleteHandler={handleDelete} 
+                            deleting={deleting} 
+                            deleteError={deleteError} 
+                            setUpdater={setUpdater} 
+                            updaterTargetId={updaterTarget? updaterTarget.id : null}/>
                     ))}
                 </ul>
             )}
