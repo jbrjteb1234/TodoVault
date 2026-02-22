@@ -101,6 +101,10 @@ export default function App() {
 
             setTodos((prev) => (prev.filter((e) => (e.id !== id))));
 
+            if(updaterTarget && updaterTarget.id === id){
+                setUpdater(null);
+            }
+
         }catch(error){
             setDeleteError(String(error));
         }finally{
