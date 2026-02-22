@@ -9,7 +9,7 @@ public sealed record TodoItem(
     bool IsDone,
     int Priority,
     string Owner,
-    string Category,
+    string Description,
     //the "?" means these values can be nullable
     DateOnly? DueDate,
     string? Notes

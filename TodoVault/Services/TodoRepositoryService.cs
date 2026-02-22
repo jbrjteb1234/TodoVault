@@ -67,7 +67,7 @@ public sealed class TodoRepositoryService
         ValidateTitle(dto.Title);
         ValidatePriority(dto.Priority);
         ValidateRequired(dto.Owner, "Owner");
-        ValidateRequired(dto.Category, "Category");
+        ValidateRequired(dto.Description, "Description");
 
         await writeGate.WaitAsync(ct);
         try{
@@ -83,7 +83,7 @@ public sealed class TodoRepositoryService
                 IsDone: false,
                 Priority: dto.Priority,
                 Owner: dto.Owner.Trim(),
-                Category: dto.Category.Trim(),
+                Description: dto.Description.Trim(),
                 DueDate: dto.DueDate,
                 Notes: string.IsNullOrWhiteSpace(dto.Notes) ? null : dto.Notes.Trim() //treat a dto.Notes of whitespace as null
             );
@@ -104,7 +104,7 @@ public sealed class TodoRepositoryService
         ValidateTitle(dto.Title);
         ValidatePriority(dto.Priority);
         ValidateRequired(dto.Owner, "Owner");
-        ValidateRequired(dto.Category, "Category");
+        ValidateRequired(dto.Description, "Description");
         ValidateId(id);
 
         await writeGate.WaitAsync(ct);
@@ -123,7 +123,7 @@ public sealed class TodoRepositoryService
                 IsDone = dto.IsDone,
                 Priority = dto.Priority,
                 Owner = dto.Owner.Trim(),
-                Category = dto.Category.Trim(),
+                Description = dto.Description.Trim(),
                 DueDate = dto.DueDate,
                 Notes = string.IsNullOrWhiteSpace(dto.Notes) ? null : dto.Notes.Trim()
             };

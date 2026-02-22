@@ -38,7 +38,7 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
                             {deleteError && (<label style={{color: "crimson"}}>Error deleting todo: {deleteError}</label>)}
                             <li>Priority: {todo.priority}</li>
                             <li>Owner: {todo.owner}</li>
-                            <li>Category: {todo.category}</li>
+                            <li>Description: {todo.description}</li>
                             {todo.dueDate && (<li>Due date: {todo.dueDate}</li>)}
                             {todo.notes && (<li>Notes: {todo.notes}</li>)}
                             <li>Completed:<input type="checkbox" checked={todo.isDone} readOnly></input></li>

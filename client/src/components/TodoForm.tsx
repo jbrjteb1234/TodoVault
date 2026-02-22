@@ -28,7 +28,7 @@ let empty:CreateTodoDto = {
     title: "",
     priority: null,
     owner: "",
-    category: "",
+    description: "",
     dueDate: null,
     notes: null,
 }
@@ -81,8 +81,8 @@ export default function CreateForm(props: CreateFormProp){
             </select><br></br>
             <label>Owner</label><br></br>
             <input onChange={ (e) => formUpdater(e, "owner") } value={createForm.owner}></input><br></br>
-            <label>Category</label><br></br>
-            <input onChange={ (e) => formUpdater(e, "category") } value={createForm.category}></input><br></br>
+            <label>Description</label><br></br>
+            <input onChange={ (e) => formUpdater(e, "description") } value={createForm.description}></input><br></br>
             <label>Due date</label><br></br>
             <input type="date" onChange={ (e) => formUpdater(e, "dueDate") } value={createForm.dueDate ?? ""}></input><br></br>
             <label>Notes</label><br></br>

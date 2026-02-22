@@ -7,7 +7,7 @@ export type TodoCore = {
     title: string;
     priority: Priority;
     owner: string;
-    category: string;
+    description: string;
     dueDate?: string | null;
     notes?: string | null;
 };

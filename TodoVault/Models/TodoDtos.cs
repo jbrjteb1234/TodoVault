@@ -5,7 +5,7 @@ public sealed record TodoCreateDto(
     string Title,
     int Priority,
     string Owner,
-    string Category,
+    string Description,
     DateOnly? DueDate,
     string? Notes
 );
@@ -16,7 +16,7 @@ public sealed record TodoUpdateDto(
     bool IsDone,
     int Priority,
     string Owner,
-    string Category,
+    string Description,
     DateOnly? DueDate,
     string? Notes
 );
