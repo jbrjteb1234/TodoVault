@@ -21,6 +21,7 @@ type CreateFormProp = {
     onCreate: (dto: CreateTodoDto) => void,
     resetKey?: number,
     children?: React.ReactNode
+    hideButton?: () => void
 };
 
 let empty:CreateTodoDto = {
@@ -89,6 +90,9 @@ export default function CreateForm(props: CreateFormProp){
             {props.children}
             <button type="submit" disabled={props.creating}>
                 {props.creating? "Creating..." : "Create"}
+            </button>
+            <button type="button" onClick={props.hideButton}>
+                Close
             </button>
         </form>
     );

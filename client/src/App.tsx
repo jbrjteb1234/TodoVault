@@ -116,6 +116,7 @@ export default function App() {
                 onUpdate={handleUpdate}
                 updateError={updateError}
                 updating={updating}
+                hideButton={() => setUpdater(null)}
             />
 
             <CreateForm
@@ -142,7 +143,7 @@ export default function App() {
                 setUpdater={setUpdater} 
                 updaterTargetId={updaterTarget? updaterTarget.id : null}
             />
-            
+
         </main>
     );
 

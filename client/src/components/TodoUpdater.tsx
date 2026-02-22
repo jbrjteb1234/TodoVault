@@ -7,9 +7,10 @@ type UpdateTodoProp = {
     onUpdate: (dto: UpdateTodoDto, id: number) => Promise<void>
     updateError: string | null
     updating: boolean
+    hideButton: () => void
 };
 
-export default function TodoUpdater( { todo,onUpdate,updateError,updating }: UpdateTodoProp ){
+export default function TodoUpdater( { todo,onUpdate,updateError,updating,hideButton }: UpdateTodoProp ){
 
     const [formIsDone, setFormIsDone] = useState<boolean>(false);
     
@@ -32,14 +33,15 @@ export default function TodoUpdater( { todo,onUpdate,updateError,updating }: Upd
             createError={updateError}
             onCreate={onCreateWrapper}
             resetKey={id}
+            hideButton={hideButton}
         >
-        <label>Done</label><br />
-        <input
-            type="checkbox"
-            checked={formIsDone}
-            onChange={(e) => setFormIsDone(e.target.checked)}
-        />
-        <br />
+            <label>Done</label><br />
+            <input
+                type="checkbox"
+                checked={formIsDone}
+                onChange={(e) => setFormIsDone(e.target.checked)}
+            />
+            <br />
         </TodoCreateForm>
 
     );
