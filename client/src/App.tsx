@@ -24,6 +24,7 @@ export default function App() {
     const [deleting, setDeleting] = useState<boolean>(false);
 
     const [updaterTarget, setUpdaterTarget] = useState<Todo | null>(null);
+    const [creatorActive, setCreatorActive] = useState<boolean>(false);
 
     function setUpdater(newTarget: Todo | null){
         setUpdaterTarget(newTarget);
@@ -119,11 +120,14 @@ export default function App() {
                 hideButton={() => setUpdater(null)}
             />
 
-            <CreateForm
+            <button onClick={() => setCreatorActive(true)}>Create todo</button>
+
+            {creatorActive && (<CreateForm
                 creating={creating}
                 createError={createError}
                 onCreate={handleCreate}
-            />
+                hideButton={() => setCreatorActive(false)}
+            />)}
 
             {loading && <p>Loading todos...</p>}
 
