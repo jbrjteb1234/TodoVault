@@ -34,7 +34,9 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
     function getTodoOrder(a: Todo, b: Todo): number {
         switch(sortOrder){
             case prioritySort:
-                return a.priority - b.priority;
+                const priorityDiff =  a.priority - b.priority;
+                if(priorityDiff === 0) return a.id - b.id;
+                return priorityDiff;
             case dueDateSort:
                 return 0;
             default:
