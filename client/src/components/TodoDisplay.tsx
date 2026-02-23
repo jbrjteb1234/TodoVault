@@ -53,7 +53,7 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
             </select>
 
             <ul>
-                {todoList.sort(getTodoOrder).map((todo) => (
+                {[...todoList].sort(getTodoOrder).map((todo) => (
                 <li key={todo.id}>
                     <label>{todo.title}</label>
 
