@@ -35,7 +35,9 @@ let empty:CreateTodoDto = {
 
 export default function CreateForm(props: CreateFormProp){
 
-    const [createForm, setCreateForm] = useState<CreateTodoDto>(props.value || empty);
+    const defaultValue = props.value || empty
+
+    const [createForm, setCreateForm] = useState<CreateTodoDto>(defaultValue);
 
     useEffect(()=>{
         setCreateForm(props.value ?? empty)
@@ -65,8 +67,7 @@ export default function CreateForm(props: CreateFormProp){
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setCreateForm(empty);
-        props.hideButton();
+        setCreateForm(defaultValue);
         props.onCreate(createForm);
     }
 

@@ -26,10 +26,6 @@ export default function App() {
     const [updaterTarget, setUpdaterTarget] = useState<Todo | null>(null);
     const [creatorActive, setCreatorActive] = useState<boolean>(false);
 
-    function setUpdater(newTarget: Todo | null){
-        setUpdaterTarget(newTarget);
-    }
-
     //States: CRUD errors
     const [getError, setGetError] = useState<string | null>(null);    //type is union of string and null
     const [createError, setCreateError] = useState<string | null>(null);
@@ -64,6 +60,7 @@ export default function App() {
             const createdTodo:Todo = await createTodo(createForm);
 
             setTodos((prev) => prev.concat(createdTodo));
+            setCreatorActive(false);
 
         } catch(error) {
             setCreateError(String(error));
@@ -102,7 +99,7 @@ export default function App() {
             setTodos((prev) => (prev.filter((e) => (e.id !== id))));
 
             if(updaterTarget && updaterTarget.id === id){
-                setUpdater(null);
+                setUpdaterTarget(null);
             }
 
         }catch(error){
@@ -121,7 +118,7 @@ export default function App() {
                 onUpdate={handleUpdate}
                 updateError={updateError}
                 updating={updating}
-                hideButton={() => setUpdater(null)}
+                hideButton={() => setUpdaterTarget(null)}
             />
 
             <button onClick={() => setCreatorActive(true)}>Create todo</button>
@@ -148,7 +145,7 @@ export default function App() {
                 deleteHandler={handleDelete} 
                 deleting={deleting} 
                 deleteError={deleteError} 
-                setUpdater={setUpdater} 
+                setUpdater={setUpdaterTarget} 
                 updaterTargetId={updaterTarget? updaterTarget.id : null}
             />
 
