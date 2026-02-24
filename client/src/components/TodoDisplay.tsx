@@ -23,6 +23,8 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
 
     const [sortOrder, setSortOrder] = useState<number>(defaultSort);
 
+    const [searchText, setSearchText] = useState<string>("");
+
     function expandButtonHandler(id: number): void{
         setExpandedSet((prev) => {
             const newSet = new Set(prev);
@@ -64,9 +66,15 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
     }
 
     return !loading && !getError &&(
-        <div className="TodoDisplayMain">
+        <div className="todoDisplayMain">
 
-            <div className="TodoDisplayOptions">
+            <div className="searchContainer">
+                <input className="searchButton" value={searchText} onChange={(e) => {setSearchText(e.target.value)}}></input>
+                <br/>
+                <button className="clearSearchButton" type="button" onClick={() => setSearchText("")}>Clear search</button>
+            </div>
+
+            <div className="todoDisplayOptions">
                 <select className="sortOrderSelect" onChange={(value) => setSortOrder(Number(value.target.value))} value={sortOrder}>
                     <option className="sortOrderOption" value={defaultSort} key={defaultSort}>Sort by</option>
                     <option className="sortOrderOption" value={prioritySort} key={prioritySort}>Sort by priority</option>
@@ -78,7 +86,7 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
             </div>
 
             <ul className="todoDisplayList">
-                {[...todoList].sort(getTodoOrder).map((todo) => (
+                {[...todoList].sort(getTodoOrder).map((todo) => todo.title.includes(searchText) && (
                 <li className="todoDisplayTodo" key={todo.id}>
                     <label>{todo.title}</label>
 
