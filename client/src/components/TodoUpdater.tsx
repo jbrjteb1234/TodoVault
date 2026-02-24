@@ -35,8 +35,9 @@ export default function TodoUpdater( { todo,onUpdate,updateError,updating,hideBu
             resetKey={id}
             hideButton={hideButton}
         >
-            <label>Done</label><br />
+            <label className="todoFormSubtitle">Done</label><br />
             <input
+                className="todoFormCheckbock"
                 type="checkbox"
                 checked={formIsDone}
                 onChange={(e) => setFormIsDone(e.target.checked)}
