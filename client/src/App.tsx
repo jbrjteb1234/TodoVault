@@ -110,8 +110,8 @@ export default function App() {
     }
 
     return (
-        <main style={layoutSize}>
-            <h1>TodoVault</h1>
+        <main className="main" style={layoutSize}>
+            <h1 className="mainTitle">TodoVault</h1>
 
             <TodoUpdater
                 todo={updaterTarget}
@@ -121,7 +121,7 @@ export default function App() {
                 hideButton={() => setUpdaterTarget(null)}
             />
 
-            <button onClick={() => setCreatorActive(true)}>Create todo</button>
+            <button className="createButton" onClick={() => setCreatorActive(true)}>Create todo</button>
 
             {creatorActive && (<CreateForm
                 creating={creating}
@@ -130,7 +130,7 @@ export default function App() {
                 hideButton={() => setCreatorActive(false)}
             />)}
 
-            {loading && <p>Loading todos...</p>}
+            {loading && <p className="laodingTodos">Loading todos...</p>}
 
             {!loading && getError != null && (
                 <p style={{ color: "crimson" }}>
