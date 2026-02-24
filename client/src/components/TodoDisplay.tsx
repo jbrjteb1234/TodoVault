@@ -64,33 +64,36 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
     }
 
     return !loading && !getError &&(
-        <div>
-            <select onChange={(value) => setSortOrder(Number(value.target.value))} value={sortOrder}>
-                <option value={defaultSort} key={defaultSort}>Sort by</option>
-                <option value={prioritySort} key={prioritySort}>Sort by priority</option>
-                <option value={dueDateSort} key={dueDateSort}>Sort by due date</option>
-            </select>
+        <div className="TodoDisplayMain">
 
-            <button type="button" onClick={() => allExpandButtonHandler(true)}>{"Expand all"}</button>
-            <button type="button" onClick={() => allExpandButtonHandler(false)}>{"Collapse all"}</button>
+            <div className="TodoDisplayOptions">
+                <select className="sortOrderSelect" onChange={(value) => setSortOrder(Number(value.target.value))} value={sortOrder}>
+                    <option className="sortOrderOption" value={defaultSort} key={defaultSort}>Sort by</option>
+                    <option className="sortOrderOption" value={prioritySort} key={prioritySort}>Sort by priority</option>
+                    <option className="sortOrderOption" value={dueDateSort} key={dueDateSort}>Sort by due date</option>
+                </select>
 
-            <ul>
+                <button className="expandCollapseButton" type="button" onClick={() => allExpandButtonHandler(true)}>{"Expand all"}</button>
+                <button className="expandCollapseButton" type="button" onClick={() => allExpandButtonHandler(false)}>{"Collapse all"}</button>
+            </div>
+
+            <ul className="todoDisplayList">
                 {[...todoList].sort(getTodoOrder).map((todo) => (
-                <li key={todo.id}>
+                <li className="todoDisplayTodo" key={todo.id}>
                     <label>{todo.title}</label>
 
-                    <button onClick={() => {expandButtonHandler(todo.id)}}/>
+                    <button className="todoExpand" onClick={() => {expandButtonHandler(todo.id)}}/>
                     
                         { expandedSet.has(todo.id) && (
                             <ul>
                                 {deleteError && (<label style={{color: "crimson"}}>Error deleting todo: {deleteError}</label>)}
-                                <li>Priority: {todo.priority}</li>
-                                <li>Owner: {todo.owner}</li>
-                                <li>Description: {todo.description}</li>
-                                {todo.dueDate && (<li>Due date: {todo.dueDate}</li>)}
-                                {todo.notes && (<li>Notes: {todo.notes}</li>)}
-                                <li>Completed:<input type="checkbox" checked={todo.isDone} readOnly></input></li>
-                                <button onClick={ updaterTargetId == todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
+                                <li className="todoDisplayTodoAttribute">Priority: {todo.priority}</li>
+                                <li className="todoDisplayTodoAttribute">Owner: {todo.owner}</li>
+                                <li className="todoDisplayTodoAttribute">Description: {todo.description}</li>
+                                {todo.dueDate && (<li className="todoDisplayTodoAttribute">Due date: {todo.dueDate}</li>)}
+                                {todo.notes && (<li className="todoDisplayTodoAttribute">Notes: {todo.notes}</li>)}
+                                <li className="todoDisplayTodoAttribute">Completed:<input type="checkbox" checked={todo.isDone} readOnly></input></li>
+                                <button className="todoDisplayTodoButton" onClick={ updaterTargetId == todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
                                 <button onClick={ () => deleteHandler(todo.id) }>{deleting ? "Deleting..." : "Delete"}</button>
                             </ul>
                         )}
