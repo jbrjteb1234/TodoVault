@@ -82,7 +82,7 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
                 <li className="todoDisplayTodo" key={todo.id}>
                     <label>{todo.title}</label>
 
-                    <button className="todoExpand" onClick={() => {expandButtonHandler(todo.id)}}/>
+                    <button className="todoExpand" onClick={() => {expandButtonHandler(todo.id)}}>{expandedSet.has(todo.id) ? "▾" : "▸"}</button>
                     
                         { expandedSet.has(todo.id) && (
                             <ul>
