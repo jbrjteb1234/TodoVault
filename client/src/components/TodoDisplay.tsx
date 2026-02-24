@@ -45,8 +45,6 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
                 if(byDue === 0) return a.id-b.id;
 
                 return byDue;
-
-                return 0;
             default:
                 return 0;
         }
