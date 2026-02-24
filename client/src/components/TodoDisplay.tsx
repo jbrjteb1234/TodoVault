@@ -31,6 +31,19 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
         });
     }
 
+    function allExpandButtonHandler(action: boolean): void {
+        const newSet = new Set<number>();
+
+        if(!action){
+            setExpandedSet(newSet);
+        }else{
+            todoList.forEach((todo) =>
+                newSet.add(todo.id)
+            )
+            setExpandedSet(newSet);
+        }
+    }
+
     function getTodoOrder(a: Todo, b: Todo): number {
         switch(sortOrder){
             case prioritySort:
@@ -58,6 +71,9 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
                 <option value={dueDateSort} key={dueDateSort}>Sort by due date</option>
             </select>
 
+            <button type="button" onClick={() => allExpandButtonHandler(true)}>{"Expand all"}</button>
+            <button type="button" onClick={() => allExpandButtonHandler(false)}>{"Collapse all"}</button>
+
             <ul>
                 {[...todoList].sort(getTodoOrder).map((todo) => (
                 <li key={todo.id}>
@@ -65,7 +81,7 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
 
                     <button onClick={() => {expandButtonHandler(todo.id)}}/>
                     
-                        {expandedSet.has(todo.id) && (
+                        { expandedSet.has(todo.id) && (
                             <ul>
                                 {deleteError && (<label style={{color: "crimson"}}>Error deleting todo: {deleteError}</label>)}
                                 <li>Priority: {todo.priority}</li>
