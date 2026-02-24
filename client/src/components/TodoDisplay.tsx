@@ -38,6 +38,14 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
                 if(priorityDiff === 0) return a.id - b.id;
                 return priorityDiff;
             case dueDateSort:
+                const aDueDate = a.dueDate ?? "9999-99-99";
+                const bDueDate = b.dueDate ?? "9999-99-99";
+
+                const byDue = aDueDate.localeCompare(bDueDate);
+                if(byDue === 0) return a.id-b.id;
+
+                return byDue;
+
                 return 0;
             default:
                 return 0;
