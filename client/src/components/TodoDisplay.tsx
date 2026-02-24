@@ -94,7 +94,7 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
                                 {todo.notes && (<li className="todoDisplayTodoAttribute">Notes: {todo.notes}</li>)}
                                 <li className="todoDisplayTodoAttribute">Completed:<input type="checkbox" checked={todo.isDone} readOnly></input></li>
                                 <button className="todoDisplayTodoButton" onClick={ updaterTargetId == todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
-                                <button onClick={ () => deleteHandler(todo.id) }>{deleting ? "Deleting..." : "Delete"}</button>
+                                <button  className="todoDisplayTodoButton" onClick={ () => deleteHandler(todo.id) }>{deleting ? "Deleting..." : "Delete"}</button>
                             </ul>
                         )}
                 </li>
