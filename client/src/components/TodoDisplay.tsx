@@ -1,4 +1,4 @@
-import { PriorityOptions, type Todo } from "../types/todo.ts";
+import type { Todo } from "../types/todo.ts";
 import { useState } from "react";
 
 type CreateTodoDisplayProps = {
