@@ -1,28 +1,26 @@
+:root{
+    --search-sort-width: 180px;
+}
+
 .todoDisplayMain {
     margin-top: 1rem;
 }
 
+.todoDisplayOptions,
 .searchContainer {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 1rem;
     align-items: center;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 
-.searchButton {
-    width: min(340px, 100%);
-    background: #0f172a;
-    color: var(--text);
+.searchField {
     border: 1px solid var(--border);
+    width: var(--search-sort-width);
+    padding: 0.5rem 0.7rem;
+    background: #1b2434;
     border-radius: var(--standard-border-radius-small);
-    padding: 0.55rem 0.7rem;
-    outline: none;
-}
-
-.searchButton:focus {
-    border-color: #5b6b8a;
-    box-shadow: 0 0 0 2px rgba(91, 107, 138, 0.18);
 }
 
 .clearSearchButton {
@@ -30,21 +28,12 @@
     border: none;
     background: none;
     color: var(--secondary-text-colour);
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.7rem;
     cursor: pointer;
-}
-
-.todoDisplayOptions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-    margin-bottom: 1rem;
 }
 
 .sortOrderSelect,
 .expandCollapseButton {
-    appearance: none;
     border: 1px solid var(--border);
     background: #1b2434;
     color: var(--text);
@@ -53,8 +42,13 @@
     cursor: pointer;
 }
 
+.expandCollapseButton {
+    appearance: none;
+}
+
 .sortOrderSelect {
-    min-width: 180px;
+    appearance: auto;
+    width: var(--search-sort-width);
 }
 
 .expandCollapseButton:hover,
