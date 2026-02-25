@@ -1,5 +1,6 @@
 import type { Todo } from "../types/todo.ts";
 import { useState } from "react";
+import "../styles/TodoDisplay.css"
 
 type CreateTodoDisplayProps = {
     loading: boolean
@@ -88,21 +89,21 @@ export default function CreateTodoDisplay ( { loading, getError, todoList, setUp
             <ul className="todoDisplayList">
                 {[...todoList].sort(getTodoOrder).map((todo) => todo.title.includes(searchText) && (
                 <li className="todoDisplayTodo" key={todo.id}>
-                    <label>{todo.title}</label>
+                    <label className="todoDisplayTitle">{todo.title}</label>
 
                     <button className="todoExpand" onClick={() => {expandButtonHandler(todo.id)}}>{expandedSet.has(todo.id) ? "▾" : "▸"}</button>
                     
                         { expandedSet.has(todo.id) && (
-                            <ul>
+                            <ul className="todoDisplayTodoDetails">
                                 {deleteError && (<label className="errorText">Error deleting todo: {deleteError}</label>)}
                                 <li className="todoDisplayTodoAttribute">Priority: {todo.priority}</li>
                                 <li className="todoDisplayTodoAttribute">Owner: {todo.owner}</li>
                                 <li className="todoDisplayTodoAttribute">Description: {todo.description}</li>
                                 {todo.dueDate && (<li className="todoDisplayTodoAttribute">Due date: {todo.dueDate}</li>)}
                                 {todo.notes && (<li className="todoDisplayTodoAttribute">Notes: {todo.notes}</li>)}
-                                <li className="todoDisplayTodoAttribute">Completed:<input type="checkbox" checked={todo.isDone} readOnly></input></li>
-                                <button className="todoDisplayTodoButton" onClick={ updaterTargetId === todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
-                                <button  className="todoDisplayTodoButton" onClick={ () => deleteHandler(todo.id) }>{deleting ? "Deleting..." : "Delete"}</button>
+                                <li className="todoDisplayTodoAttribute">Completed:<input className="todoIsDoneCheckbox" type="checkbox" checked={todo.isDone} readOnly></input></li>
+                                <button className="todoDisplayTodoUpdateButton" onClick={ updaterTargetId === todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
+                                <button  className="todoDisplayTodoDeleteButton" onClick={ () => deleteHandler(todo.id) }>{deleting ? "Deleting..." : "Delete"}</button>
                             </ul>
                         )}
                 </li>
