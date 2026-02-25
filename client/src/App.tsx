@@ -5,7 +5,7 @@ import { createTodo, getTodos, updateTodo, deleteTodo } from "./api/TodoApis.ts"
 import CreateTodoDisplay from "./components/TodoDisplay.tsx";
 import CreateForm from "./components/TodoForm.tsx";
 import TodoUpdater from "./components/TodoUpdater.tsx";
-import "styles/app.css"
+import "./styles/app.css"
 
 //Default app to export
 export default function App() {
