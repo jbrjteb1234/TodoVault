@@ -2,6 +2,7 @@ import type { CreateTodoDto, Priority } from "../types/todo";
 import { PriorityOptions } from "../types/todo";
 import { useState, useEffect } from "react";
 import type React from "react";
+import "../styles/TodoForm.css"
 
 /*
 
@@ -76,22 +77,40 @@ export default function CreateForm(props: CreateFormProp){
             <form className="todoForm" onSubmit={handleSubmit}>
                 {props.createError != null && <div style={{color: "crimson"}}>{props.createError}</div>}
                 
-                <label className="todoFormSubtitle">Title</label><br></br>
-                <input className="todoFormTextInput" onChange={ (e) => formUpdater(e, "title") } value={createForm.title}></input><br></br>
-                <label className="todoFormSubtitle">Priority</label><br></br>
-                <select onChange={ (e) => formUpdater(e, "priority") } value={String(createForm.priority)}>
-                    <option value="">Select priority</option>
-                    {PriorityOptions.map( (p) => <option key={p} value={p} >{p}</option> )}
-                </select><br></br>
-                <label className="todoFormSubtitle">Owner</label><br></br>
-                <input className="todoFormTextInput" onChange={ (e) => formUpdater(e, "owner") } value={createForm.owner}></input><br></br>
-                <label className="todoFormSubtitle">Description</label><br></br>
-                <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "description") } value={createForm.description}></textarea><br></br>
-                <label className="todoFormSubtitle">Due date</label><br></br>
-                <input className="todoFormTextInput" type="date" onChange={ (e) => formUpdater(e, "dueDate") } value={createForm.dueDate ?? ""}></input><br></br>
-                <label className="todoFormSubtitle">Notes</label><br></br>
-                <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "notes") } value={createForm.notes ?? ""}></textarea><br></br>
-                {props.children}
+                <div className="todoFormTitle">
+                    <label className="todoFormSubtitle">Title</label><br></br>
+                    <input className="todoFormTextInput" onChange={ (e) => formUpdater(e, "title") } value={createForm.title}></input><br></br>
+                </div>
+                
+                <div className="todoFormPriority">
+                    <label className="todoFormSubtitle">Priority</label><br></br>
+                    <select onChange={ (e) => formUpdater(e, "priority") } value={String(createForm.priority)}>
+                        <option value="">Select priority</option>
+                        {PriorityOptions.map( (p) => <option key={p} value={p} >{p}</option> )}
+                    </select><br></br>
+                </div>
+                
+                <div className="todoFormOwner">
+                    <label className="todoFormSubtitle">Owner</label><br></br>
+                    <input className="todoFormTextInput" onChange={ (e) => formUpdater(e, "owner") } value={createForm.owner}></input><br></br>
+                </div>
+                
+                <div className="todoFormDescription">
+                    <label className="todoFormSubtitle">Description</label><br></br>
+                    <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "description") } value={createForm.description}></textarea><br></br>
+                </div>
+                
+                <div className="todoFormDueDate">
+                    <label className="todoFormSubtitle">Due date</label><br></br>
+                    <input className="todoFormTextInput" type="date" onChange={ (e) => formUpdater(e, "dueDate") } value={createForm.dueDate ?? ""}></input><br></br>
+                </div>
+                
+                <div className="todoFormNotes">
+                    <label className="todoFormSubtitle">Notes</label><br></br>
+                    <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "notes") } value={createForm.notes ?? ""}></textarea><br></br>
+                    {props.children}
+                </div>
+                
                 <button className="todoFormButton" type="submit" disabled={props.creating}>
                     {props.creating? "Creating..." : "Create"}
                 </button>
