@@ -19,6 +19,8 @@
   --danger: #dc2626;
   --danger-bg: rgba(220, 38, 38, 0.12);
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --standard-border-radius-small: 2px;
+  --secondary-text-colour: #616060;
 }
 
 body {
