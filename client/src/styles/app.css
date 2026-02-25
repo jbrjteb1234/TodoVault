@@ -1,0 +1,29 @@
+/* Every element's height/width now include padding and border */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* :root means the top-level element (html) */
+:root {
+  /* CSS variables */
+  --bg: #0f172a;
+  --panel: #111827;
+  --panel-2: #1f2937;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: #374151;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --danger: #dc2626;
+  --danger-bg: rgba(220, 38, 38, 0.12);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
+    color: var(--text);
+}
