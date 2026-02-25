@@ -17,7 +17,7 @@ const prioritySort = 1;
 const dueDateSort = 2;
 
 //This function is a react component, so the argument must be a prop object
-export default function createTodoDisplay( { loading, getError, todoList, setUpdater, updaterTargetId, deleteHandler, deleting, deleteError } : CreateTodoDisplayProps){
+export default function CreateTodoDisplay ( { loading, getError, todoList, setUpdater, updaterTargetId, deleteHandler, deleting, deleteError } : CreateTodoDisplayProps){
 
     const [expandedSet, setExpandedSet] = useState<Set<number>>(new Set<number>);
 
@@ -69,7 +69,7 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
         <div className="todoDisplayMain">
 
             <div className="searchContainer">
-                <input className="searchButton" value={searchText} onChange={(e) => {setSearchText(e.target.value)}}></input>
+                <input className="searchField" type="text" placeholder="Search todos..." value={searchText} onChange={(e) => {setSearchText(e.target.value)}}></input>
                 <br/>
                 <button className="clearSearchButton" type="button" onClick={() => setSearchText("")}>Clear search</button>
             </div>
@@ -94,14 +94,14 @@ export default function createTodoDisplay( { loading, getError, todoList, setUpd
                     
                         { expandedSet.has(todo.id) && (
                             <ul>
-                                {deleteError && (<label style={{color: "crimson"}}>Error deleting todo: {deleteError}</label>)}
+                                {deleteError && (<label className="errorText">Error deleting todo: {deleteError}</label>)}
                                 <li className="todoDisplayTodoAttribute">Priority: {todo.priority}</li>
                                 <li className="todoDisplayTodoAttribute">Owner: {todo.owner}</li>
                                 <li className="todoDisplayTodoAttribute">Description: {todo.description}</li>
                                 {todo.dueDate && (<li className="todoDisplayTodoAttribute">Due date: {todo.dueDate}</li>)}
                                 {todo.notes && (<li className="todoDisplayTodoAttribute">Notes: {todo.notes}</li>)}
                                 <li className="todoDisplayTodoAttribute">Completed:<input type="checkbox" checked={todo.isDone} readOnly></input></li>
-                                <button className="todoDisplayTodoButton" onClick={ updaterTargetId == todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
+                                <button className="todoDisplayTodoButton" onClick={ updaterTargetId === todo.id ? () => setUpdater(null) : () => setUpdater(todo) }>Update</button>
                                 <button  className="todoDisplayTodoButton" onClick={ () => deleteHandler(todo.id) }>{deleting ? "Deleting..." : "Delete"}</button>
                             </ul>
                         )}
