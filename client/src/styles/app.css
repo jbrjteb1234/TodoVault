@@ -48,12 +48,15 @@ body {
 
 .mainTitle {
   margin: 0 0 1rem 0;
+  padding: 0 0 5px 0;
 
   font-size: clamp(1.5rem, 2vw, 2rem);
 
   line-height: 1.1;
 
   letter-spacing: 0.3px;
+
+  border-bottom: 1px solid var(--border);
 }
 
 .createButton {
