@@ -5,11 +5,7 @@ import { createTodo, getTodos, updateTodo, deleteTodo } from "./api/TodoApis.ts"
 import CreateTodoDisplay from "./components/TodoDisplay.tsx";
 import CreateForm from "./components/TodoForm.tsx";
 import TodoUpdater from "./components/TodoUpdater.tsx";
-
-const layoutSize = {
-    padding: 24,
-    fontFamily: "system-ui, sans-serif"
-}
+import "styles/app.css"
 
 //Default app to export
 export default function App() {
@@ -110,7 +106,7 @@ export default function App() {
     }
 
     return (
-        <main className="main" style={layoutSize}>
+        <main className="main">
             <h1 className="mainTitle">TodoVault</h1>
 
             <TodoUpdater
