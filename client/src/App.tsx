@@ -126,10 +126,10 @@ export default function App() {
                 hideButton={() => setCreatorActive(false)}
             />)}
 
-            {loading && <p className="laodingTodos">Loading todos...</p>}
+            {loading && <p className="loadingTodos">Loading todos...</p>}
 
             {!loading && getError != null && (
-                <p style={{ color: "crimson" }}>
+                <p className="errorText">
                     Failed to load todos: {getError}
                 </p>
             )}
