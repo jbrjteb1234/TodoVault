@@ -78,43 +78,43 @@ export default function CreateForm(props: CreateFormProp){
                 {props.createError != null && <div style={{color: "crimson"}}>{props.createError}</div>}
                 
                 <div className="todoFormTitle">
-                    <label className="todoFormSubtitle">Title</label><br></br>
-                    <input className="todoFormTextInput" onChange={ (e) => formUpdater(e, "title") } value={createForm.title}></input><br></br>
+                    <label className="todoFormSubtitle">Title</label>
+                    <input className="todoFormTextInput" onChange={ (e) => formUpdater(e, "title") } value={createForm.title}></input>
                 </div>
                 
                 <div className="todoFormPriority">
-                    <label className="todoFormSubtitle">Priority</label><br></br>
+                    <label className="todoFormSubtitle">Priority</label>
                     <select onChange={ (e) => formUpdater(e, "priority") } value={String(createForm.priority)}>
                         <option value="">Select priority</option>
                         {PriorityOptions.map( (p) => <option key={p} value={p} >{p}</option> )}
-                    </select><br></br>
+                    </select>
                 </div>
                 
                 <div className="todoFormOwner">
-                    <label className="todoFormSubtitle">Owner</label><br></br>
-                    <input className="todoFormTextInput" onChange={ (e) => formUpdater(e, "owner") } value={createForm.owner}></input><br></br>
+                    <label className="todoFormSubtitle">Owner</label>
+                    <input className="todoFormTextInput" onChange={ (e) => formUpdater(e, "owner") } value={createForm.owner}></input>
                 </div>
                 
                 <div className="todoFormDescription">
-                    <label className="todoFormSubtitle">Description</label><br></br>
-                    <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "description") } value={createForm.description}></textarea><br></br>
+                    <label className="todoFormSubtitle">Description</label>
+                    <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "description") } value={createForm.description}></textarea>
                 </div>
                 
                 <div className="todoFormDueDate">
-                    <label className="todoFormSubtitle">Due date</label><br></br>
-                    <input className="todoFormTextInput" type="date" onChange={ (e) => formUpdater(e, "dueDate") } value={createForm.dueDate ?? ""}></input><br></br>
+                    <label className="todoFormSubtitle">Due date</label>
+                    <input className="todoFormTextInput" type="date" onChange={ (e) => formUpdater(e, "dueDate") } value={createForm.dueDate ?? ""}></input>
                 </div>
                 
                 <div className="todoFormNotes">
-                    <label className="todoFormSubtitle">Notes</label><br></br>
-                    <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "notes") } value={createForm.notes ?? ""}></textarea><br></br>
+                    <label className="todoFormSubtitle">Notes</label>
+                    <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "notes") } value={createForm.notes ?? ""}></textarea>
                     {props.children}
                 </div>
                 
-                <button className="todoFormButton" type="submit" disabled={props.creating}>
+                <button className="todoFormCreateButton" type="submit" disabled={props.creating}>
                     {props.creating? "Creating..." : "Create"}
                 </button>
-                <button className="todoFormButton" type="button" onClick={props.hideButton}>
+                <button className="todoFormDeleteButton" type="button" onClick={props.hideButton}>
                     Close
                 </button>
             </form>
