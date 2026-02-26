@@ -71,7 +71,6 @@ export default function CreateTodoDisplay ( { loading, getError, todoList, setUp
 
             <div className="searchContainer">
                 <input className="searchField" type="text" placeholder="Search todos..." value={searchText} onChange={(e) => {setSearchText(e.target.value)}}></input>
-                <br/>
                 <button className="clearSearchButton" type="button" onClick={() => setSearchText("")}>Clear search</button>
             </div>
 

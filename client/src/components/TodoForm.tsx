@@ -84,7 +84,7 @@ export default function CreateForm(props: CreateFormProp){
                 
                 <div className="todoFormPriority">
                     <label className="todoFormSubtitle">Priority</label>
-                    <select onChange={ (e) => formUpdater(e, "priority") } value={String(createForm.priority)}>
+                    <select className="todoFormSelect" onChange={ (e) => formUpdater(e, "priority") } value={String(createForm.priority)}>
                         <option value="">Select priority</option>
                         {PriorityOptions.map( (p) => <option key={p} value={p} >{p}</option> )}
                     </select>
@@ -97,7 +97,7 @@ export default function CreateForm(props: CreateFormProp){
                 
                 <div className="todoFormDescription">
                     <label className="todoFormSubtitle">Description</label>
-                    <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "description") } value={createForm.description}></textarea>
+                    <textarea className="todoFormTextArea" onChange={ (e) => formUpdater(e, "description") } value={createForm.description}></textarea>
                 </div>
                 
                 <div className="todoFormDueDate">
@@ -107,7 +107,7 @@ export default function CreateForm(props: CreateFormProp){
                 
                 <div className="todoFormNotes">
                     <label className="todoFormSubtitle">Notes</label>
-                    <textarea className="todoFormTextTextArea" onChange={ (e) => formUpdater(e, "notes") } value={createForm.notes ?? ""}></textarea>
+                    <textarea className="todoFormTextArea" onChange={ (e) => formUpdater(e, "notes") } value={createForm.notes ?? ""}></textarea>
                     {props.children}
                 </div>
                 
