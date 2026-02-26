@@ -70,7 +70,7 @@ export default function CreateTodoDisplay ( { loading, getError, todoList, setUp
         <div className="todoDisplayMain">
 
             <div className="searchContainer">
-                <input className="searchField" type="text" placeholder="Search todos..." value={searchText} onChange={(e) => {setSearchText(e.target.value)}}></input>
+                <input className="searchField" type="text" placeholder="Search todos..." value={searchText} onChange={(e) => {setSearchText(e.target.value.toLowerCase())}}></input>
                 <button className="clearSearchButton" type="button" onClick={() => setSearchText("")}>Clear search</button>
             </div>
 
@@ -86,7 +86,7 @@ export default function CreateTodoDisplay ( { loading, getError, todoList, setUp
             </div>
 
             <ul className="todoDisplayList">
-                {[...todoList].sort(getTodoOrder).map((todo) => todo.title.includes(searchText) && (
+                {[...todoList].sort(getTodoOrder).map((todo) => todo.title.toLowerCase().includes(searchText) && (
                 <li className="todoDisplayTodo" key={todo.id}>
                     <label className="todoDisplayTitle">{todo.title}</label>
 
