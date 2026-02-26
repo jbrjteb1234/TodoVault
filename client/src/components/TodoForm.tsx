@@ -45,7 +45,6 @@ export default function CreateForm(props: CreateFormProp){
     }, [props.resetKey]);
 
     function parseFormField<T extends keyof CreateTodoDto>(key: T, value: string): CreateTodoDto[T] {
-        value = value.trim();
         switch(key){
             case "priority": {
                 return (value === "" ? null : Number(value) as Priority) as CreateTodoDto[T];
