@@ -1,0 +1,121 @@
+.modelOverlay {
+    position: fixed;
+    background-color: rgba(0,0,0,.9);
+    z-index: 999;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.todoForm {
+    background-color: var(--bg);
+    position: relative;
+    height: calc(100vh - 48px);
+    width: min(520px, 100%);
+    z-index: 1000;
+    padding: 1.5rem;
+
+    box-sizing: border-box;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 
+        auto
+        auto
+        1fr
+        1fr
+        auto;
+    grid-template-areas: 
+        "title owner"
+        "priority dueDate"
+        "description description"
+        "notes notes"
+        "cbutton dbutton";
+}
+
+.todoFormTitle { grid-area: title; }
+.todoFormOwner { grid-area: owner; }
+.todoFormPriority { grid-area: priority; }
+.todoFormDueDate { grid-area: dueDate; }
+.todoFormDescription { grid-area: description; }
+.todoFormNotes { grid-area: notes; }
+
+.todoFormCreateButton { 
+    grid-area: cbutton 
+}
+
+.todoFormDeleteButton { 
+    grid-area: dbutton 
+}
+
+.todoFormTitle,
+.todoFormOwner,
+.todoFormPriority,
+.todoFormDueDate,
+.todoFormDescription,
+.todoFormNotes {
+    border-radius: var(--standard-border-radius-small);
+    padding: 10px 7px;
+    background-color: var(--panel-2);
+    border: 1px solid var(--border);
+
+    display: grid;
+}
+
+.todoFormDescription,
+.todoFormNotes {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.todoFormDescription .todoFormTextArea,
+.todoFormNotes .todoFormTextArea {
+  flex: 1;
+  min-height: 0;   
+  width: 100%;
+  resize: none;    
+  box-sizing: border-box;
+}
+
+.todoFormSubtitle {
+    margin-bottom: 5px;
+    border-bottom: 1.4px solid var(--primary)
+}
+
+.todoFormSelect,
+.todoFormTextInput {
+    height: 1.5rem;
+}
+
+.todoFormCreateButton,
+.todoFormDeleteButton {
+    appearance: none;
+    border: 1px solid transparent;
+    border-radius: var(--standard-border-radius-small);
+    padding: 0.45rem 0.7rem;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    margin-right: 0.45rem;
+    transition: background-color 120ms ease;
+}
+
+.todoFormCreateButton {
+    background: #374151;
+    color: white;
+}
+
+.todoFormCreateButton:hover {
+    background: #4b5563;
+}
+
+.todoFormDeleteButton {
+    background: #7f1d1d;
+    color: white;
+}
+
+.todoFormDeleteButton:hover {
+    background: #991b1b;
+}

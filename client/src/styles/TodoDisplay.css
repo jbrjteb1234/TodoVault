@@ -21,6 +21,7 @@
     padding: 0.5rem 0.7rem;
     background: #1b2434;
     border-radius: var(--standard-border-radius-small);
+    color: #ffffff
 }
 
 .clearSearchButton {
